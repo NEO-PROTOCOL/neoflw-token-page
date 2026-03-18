@@ -1,212 +1,1002 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEOFLW Token - Native Token of NEO Protocol</title>
-    <meta name="description" content="NEOFLW is the native token of NEO Protocol ecosystem. ERC20 with governance, staking & claims on Base mainnet.">
-    <meta name="og:image" content="https://neoflowoff.eth.limo/og-image.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEOFLW — NEØ Protocol Native Token</title>
+    <meta name="description"
+        content="NEOFLW is the native token of the NEØ Protocol ecosystem. ERC-20 on Base mainnet." />
+    <meta property="og:title" content="NEOFLW Token" />
+    <meta property="og:image" content="https://neoflw.vercel.app/og-image.png" />
+    <meta name="theme-color" content="#FF00CC" />
+    <link rel="icon" type="image/png"
+        href="data:image/png;base64,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" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;900&family=DM+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+
     <style>
-        * {
+        :root {
+            --bg: #08080c;
+            --bg2: #0e0e16;
+            --glass: rgba(255, 255, 255, 0.055);
+            --glass-b: rgba(255, 255, 255, 0.10);
+            --glass-str: rgba(255, 255, 255, 0.13);
+            --border: rgba(255, 255, 255, 0.09);
+            --border-b: rgba(255, 255, 255, 0.17);
+            --pink: #FF00CC;
+            --pink-soft: #ff40d9;
+            --pink-dim: rgba(255, 0, 204, 0.18);
+            --pink-glow: rgba(255, 0, 204, 0.35);
+            --green: #00ff88;
+            --green-dim: rgba(0, 255, 136, 0.15);
+            --text: rgba(255, 255, 255, 0.92);
+            --text-2: rgba(255, 255, 255, 0.55);
+            --text-3: rgba(255, 255, 255, 0.30);
+            --display: 'Figtree', sans-serif;
+            --mono: 'DM Mono', monospace;
+            --r-sm: 14px;
+            --r-md: 20px;
+            --r-lg: 28px;
+            --r-xl: 36px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1a1f35 100%);
-            color: #e2e8f0;
-            line-height: 1.6;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--display);
+            font-size: 15px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        header {
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 15% 10%, rgba(255, 0, 204, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 85% 80%, rgba(120, 0, 255, 0.10) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 40% at 60% 40%, rgba(0, 180, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .nav-pill {
+            max-width: 1160px;
+            margin: 1rem auto 0;
+            padding: 0 1.5rem;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 52px;
+            padding: 0 1.25rem;
+            border-radius: 999px;
+            background: rgba(14, 14, 22, 0.75);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--border-b);
+        }
+
+        .nav-logo {
+            font-family: var(--display);
+            font-weight: 900;
+            font-size: 1.05rem;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .nav-logo .neo {
+            color: var(--pink);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.25rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .nav-links a:hover {
+            background: var(--glass-b);
+            color: var(--text);
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 1.1rem;
+            border-radius: 999px;
+            background: var(--pink);
+            color: #fff;
+            font-family: var(--display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.15s;
+        }
+
+        .nav-btn:hover {
+            opacity: 0.85;
+            transform: scale(0.98);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 0 60px;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            background: var(--pink-dim);
+            border: 1px solid rgba(255, 0, 204, 0.30);
+            font-size: 0.72rem;
+            font-weight: 600;
+            font-family: var(--mono);
+            letter-spacing: 0.1em;
+            color: var(--pink-soft);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--pink);
+            border-radius: 50%;
+            animation: blink 2s ease infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(3.2rem, 7vw, 6.5rem);
+            font-weight: 900;
+            line-height: 0.92;
+            letter-spacing: -0.04em;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title .line2 {
+            display: block;
+            background: linear-gradient(135deg, var(--pink) 0%, #cc00ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: var(--text-2);
+            line-height: 1.7;
+            max-width: 440px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-desc strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-fill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            border-radius: 999px;
+            background: var(--pink);
+            color: #fff;
+            font-family: var(--display);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.15s;
+        }
+
+        .btn-fill:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            border-radius: 999px;
+            background: var(--glass);
+            border: 1px solid var(--border-b);
+            color: var(--text);
+            font-family: var(--display);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            backdrop-filter: blur(12px);
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+        }
+
+        .btn-outline:hover {
+            background: var(--glass-b);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        /* CONTRACT CHIP */
+        .contract-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 1rem;
+            border-radius: var(--r-md);
+            background: var(--glass);
+            border: 1px solid var(--border-b);
+            backdrop-filter: blur(16px);
+            max-width: 100%;
+        }
+
+        .chip-label {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            color: var(--text-3);
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .chip-addr {
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            color: var(--green);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .chip-copy {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-3);
+            font-size: 0.75rem;
+            font-family: var(--mono);
+            flex-shrink: 0;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--r-sm);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .chip-copy:hover {
+            background: var(--glass-b);
+            color: var(--pink-soft);
+        }
+
+        /* HERO CARD */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-card-main {
+            width: 100%;
+            max-width: 340px;
+            border-radius: var(--r-xl);
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 1px rgba(255, 0, 204, 0.10), 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card-main::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -20%;
+            width: 100%;
+            height: 80%;
+            background: radial-gradient(ellipse, rgba(255, 0, 204, 0.18) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hc-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.75rem;
+        }
+
+        .hc-token {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .hc-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--pink-dim);
+            border: 1px solid rgba(255, 0, 204, 0.3);
+        }
+
+        .hc-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hc-name {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .hc-ticker {
+            font-size: 0.72rem;
+            color: var(--text-2);
+            font-family: var(--mono);
+        }
+
+        .hc-badge {
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            background: var(--green-dim);
+            border: 1px solid rgba(0, 255, 136, 0.25);
+            color: var(--green);
+            font-size: 0.65rem;
+            font-weight: 600;
+            font-family: var(--mono);
+            letter-spacing: 0.08em;
+        }
+
+        .hc-supply-label {
+            font-size: 0.7rem;
+            color: var(--text-3);
+            font-family: var(--mono);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .hc-supply {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .hc-supply span {
+            font-size: 1.1rem;
+            color: var(--text-2);
+            font-weight: 400;
+        }
+
+        .hc-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 1.25rem 0;
+        }
+
+        .hc-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .hc-meta-label {
+            font-size: 0.65rem;
+            color: var(--text-3);
+            font-family: var(--mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .hc-meta-val {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-top: 0.15rem;
+        }
+
+        .hc-bar {
+            margin-top: 1.25rem;
+        }
+
+        .hc-bar-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            font-size: 0.68rem;
+            color: var(--text-3);
+            font-family: var(--mono);
+            margin-bottom: 0.4rem;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hc-bar-track {
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            overflow: hidden;
         }
 
-        nav a {
-            color: #e2e8f0;
-            text-decoration: none;
-            margin-left: 2rem;
-            transition: color 0.3s;
+        .hc-bar-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--pink), #cc00ff);
+            width: 68%;
+            animation: barGrow 1.5s ease both 0.8s;
         }
 
-        nav a:hover {
-            color: #60a5fa;
+        @keyframes barGrow {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 68%;
+            }
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        .float-badge {
+            position: absolute;
+            bottom: -1.5rem;
+            right: -1.5rem;
+            padding: 0.65rem 1rem;
+            border-radius: var(--r-md);
+            background: rgba(255, 0, 204, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 0, 204, 0.3);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--pink-soft);
+            white-space: nowrap;
+            box-shadow: 0 8px 32px rgba(255, 0, 204, 0.2);
         }
 
-        .hero {
-            text-align: center;
-            padding: 4rem 2rem;
+        .float-badge-2 {
+            position: absolute;
+            top: -1rem;
+            left: -1.5rem;
+            padding: 0.55rem 0.9rem;
+            border-radius: var(--r-md);
+            background: rgba(0, 255, 136, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 136, 0.25);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--green);
+            white-space: nowrap;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* STATS */
+        .stats-section {
+            padding: 0 0 3rem;
         }
 
-        .hero p {
-            font-size: 1.25rem;
-            color: #cbd5e1;
-            margin-bottom: 2rem;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        button, a.btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: white;
-            font-weight: bold;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid #60a5fa;
-            color: #60a5fa;
-        }
-
-        .btn-secondary:hover {
-            background: #1e3a5f;
-        }
-
-        .info-grid {
+        .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
         }
 
-        .info-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            border-radius: 0.75rem;
+        .stat-cell {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem 1.25rem;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .stat-cell:hover {
+            background: var(--glass-b);
+        }
+
+        .stat-cell-label {
+            font-size: 0.65rem;
+            font-family: var(--mono);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-cell-val {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .stat-cell-val.pink {
+            color: var(--pink);
+        }
+
+        .stat-cell-val.green {
+            color: var(--green);
+        }
+
+        /* BENTO */
+        .bento-section {
+            padding: 4rem 0;
+        }
+
+        .section-eyebrow {
+            font-size: 0.7rem;
+            font-family: var(--mono);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--pink-soft);
+            margin-bottom: 0.6rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: #fff;
+            margin-bottom: 3rem;
+            line-height: 1.0;
+        }
+
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: auto;
+            gap: 12px;
+        }
+
+        .bc {
+            background: var(--glass);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
             padding: 1.5rem;
-            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.2s;
         }
 
-        .info-card h3 {
-            color: #60a5fa;
-            margin-bottom: 0.75rem;
+        .bc:hover {
+            border-color: var(--border-b);
+            transform: translateY(-2px);
         }
 
-        .info-card p {
-            color: #cbd5e1;
-            font-size: 0.95rem;
+        .bc-w8 {
+            grid-column: span 8;
         }
 
-        .token-address {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(148, 163, 184, 0.3);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin: 2rem 0;
-            font-family: monospace;
-            word-break: break-all;
-            text-align: center;
-            color: #10b981;
+        .bc-w4 {
+            grid-column: span 4;
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
+        .bc-w6 {
+            grid-column: span 6;
         }
 
-        .feature-tag {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 0.5rem;
-            padding: 0.75rem;
-            text-align: center;
-            color: #60a5fa;
-            font-size: 0.9rem;
+        .bc-w5 {
+            grid-column: span 5;
         }
 
-        .verification-section {
-            background: rgba(16, 185, 129, 0.1);
-            border: 2px solid rgba(16, 185, 129, 0.3);
-            border-radius: 0.75rem;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
+        .bc-w7 {
+            grid-column: span 7;
         }
 
-        .verification-section h2 {
-            color: #10b981;
+        .bc-w3 {
+            grid-column: span 3;
+        }
+
+        .bc-w9 {
+            grid-column: span 9;
+        }
+
+        .bc-supply {
+            background: linear-gradient(135deg, rgba(255, 0, 204, 0.15) 0%, rgba(120, 0, 255, 0.10) 100%);
+            border-color: rgba(255, 0, 204, 0.20);
+        }
+
+        .bc-supply::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(ellipse, rgba(255, 0, 204, 0.20) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .bc-number-huge {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .bc-label {
+            font-size: 0.68rem;
+            font-family: var(--mono);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-3);
+            margin-bottom: 0.5rem;
+        }
+
+        .bc-sublabel {
+            font-size: 0.8rem;
+            color: var(--text-2);
+            margin-top: 0.5rem;
+        }
+
+        .bc-verified {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.10) 0%, rgba(0, 200, 100, 0.05) 100%);
+            border-color: rgba(0, 255, 136, 0.18);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .verified-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--green-dim);
+            border: 1px solid rgba(0, 255, 136, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
             margin-bottom: 1rem;
         }
 
-        .links-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
+        .bc-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.4rem;
         }
 
-        .link-btn {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 0.5rem;
-            padding: 1rem;
-            text-decoration: none;
-            color: #60a5fa;
-            transition: all 0.3s;
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            margin-top: 0.75rem;
+        }
+
+        .feature-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.85rem;
+            border-radius: var(--r-sm);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            font-size: 0.82rem;
+            color: var(--text-2);
+            transition: background 0.2s;
+        }
+
+        .feature-row:hover {
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--text);
+        }
+
+        .feature-row-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+            width: 28px;
             text-align: center;
         }
 
-        .link-btn:hover {
-            background: rgba(59, 130, 246, 0.2);
-            border-color: rgba(59, 130, 246, 0.5);
+        .feature-row-badge {
+            margin-left: auto;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.6rem;
+            font-family: var(--mono);
+            letter-spacing: 0.08em;
+            background: rgba(255, 0, 204, 0.12);
+            border: 1px solid rgba(255, 0, 204, 0.2);
+            color: var(--pink-soft);
+            flex-shrink: 0;
+        }
+
+        .bc-network {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 0.75rem;
+            padding: 2rem 1.5rem;
+        }
+
+        .network-ring {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 0, 204, 0.2), rgba(120, 0, 255, 0.2));
+            border: 2px solid rgba(255, 0, 204, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            position: relative;
+        }
+
+        .network-ring::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 0, 204, 0.12);
+        }
+
+        .network-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .network-sub {
+            font-size: 0.72rem;
+            font-family: var(--mono);
+            color: var(--text-3);
+            letter-spacing: 0.08em;
+        }
+
+        .bc-code {
+            background: rgba(0, 0, 0, 0.3);
+            font-family: var(--mono);
+        }
+
+        .code-block {
+            font-size: 0.72rem;
+            line-height: 2;
+            margin-top: 0.75rem;
+        }
+
+        .c-key {
+            color: #cc99ff;
+        }
+
+        .c-val {
+            color: var(--green);
+        }
+
+        .c-str {
+            color: #ffcc66;
+        }
+
+        .c-cmt {
+            color: var(--text-3);
+        }
+
+        .c-pnk {
+            color: var(--pink-soft);
+        }
+
+        .links-cluster {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 0.75rem;
+        }
+
+        .link-tile {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.7rem 0.85rem;
+            border-radius: var(--r-sm);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text-2);
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+        }
+
+        .link-tile:hover {
+            background: rgba(255, 0, 204, 0.08);
+            border-color: rgba(255, 0, 204, 0.25);
+            color: var(--text);
+        }
+
+        .link-tile-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* CHART */
+        .chart-section {
+            padding: 0 0 5rem;
+        }
+
+        .chart-wrap {
+            border-radius: var(--r-xl);
+            overflow: hidden;
+            border: 1px solid var(--border-b);
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+        }
+
+        .chart-header {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chart-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chart-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--pink-dim);
+            border: 1px solid rgba(255, 0, 204, 0.25);
+        }
+
+        .chart-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chart-info-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .chart-info-sub {
+            font-size: 0.65rem;
+            font-family: var(--mono);
+            color: var(--text-3);
+            letter-spacing: 0.08em;
+        }
+
+        .chart-live {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            font-family: var(--mono);
+            color: var(--green);
+            padding: 0.3rem 0.75rem;
+            border-radius: 999px;
+            background: var(--green-dim);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .chart-live::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: blink 2s infinite;
         }
 
         #dexscreener-embed {
             position: relative;
             width: 100%;
             padding-bottom: 125%;
-            margin: 3rem 0;
-            border-radius: 0.75rem;
-            overflow: hidden;
+        }
+
+        @media(min-width:1400px) {
+            #dexscreener-embed {
+                padding-bottom: 65%;
+            }
         }
 
         #dexscreener-embed iframe {
@@ -215,112 +1005,633 @@
             height: 100%;
             top: 0;
             left: 0;
-            border: none;
-            border-radius: 0.75rem;
+            border: 0;
         }
 
-        @media (min-width: 1400px) {
-            #dexscreener-embed {
-                padding-bottom: 65%;
-            }
+        /* VERIFY */
+        .verify-section {
+            padding: 0 0 6rem;
         }
 
-        footer {
-            text-align: center;
+        .verify-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .verify-left {
+            border-radius: var(--r-xl);
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 180, 100, 0.04) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            backdrop-filter: blur(28px);
+        }
+
+        .verify-ok {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 999px;
+            background: var(--green-dim);
+            border: 1px solid rgba(0, 255, 136, 0.25);
+            color: var(--green);
+            font-size: 0.7rem;
+            font-weight: 600;
+            font-family: var(--mono);
+            letter-spacing: 0.08em;
+            margin-bottom: 1.5rem;
+        }
+
+        .verify-heading {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .verify-heading .ok {
+            color: var(--green);
+        }
+
+        .verify-body {
+            font-size: 0.85rem;
+            color: var(--text-2);
+            line-height: 1.75;
+            margin-bottom: 1.5rem;
+        }
+
+        .verify-checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+        }
+
+        .verify-checklist li {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.82rem;
+            color: var(--text-2);
+        }
+
+        .verify-checklist li span.check {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--green-dim);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--green);
+            font-size: 0.6rem;
+            flex-shrink: 0;
+        }
+
+        .verify-right {
+            border-radius: var(--r-xl);
             padding: 2rem;
-            color: #64748b;
-            border-top: 1px solid rgba(148, 163, 184, 0.1);
-            margin-top: 3rem;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(28px);
+            font-family: var(--mono);
         }
 
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot-r {
+            background: #ff5f56;
+        }
+
+        .dot-y {
+            background: #ffbd2e;
+        }
+
+        .dot-g {
+            background: #27c93f;
+        }
+
+        .code-body {
+            font-size: 0.75rem;
+            line-height: 2;
+            color: var(--text-2);
+        }
+
+        .code-line {
+            display: block;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+        }
+
+        .footer-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-brand {
+            font-weight: 900;
+            font-size: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-brand .neo {
+            color: var(--pink);
+        }
+
+        .footer-sub {
+            font-size: 0.68rem;
+            color: var(--text-3);
+            font-family: var(--mono);
+            margin-top: 0.2rem;
+        }
+
+        .footer-right {
+            font-size: 0.68rem;
+            color: var(--text-3);
+            text-align: right;
+            line-height: 1.8;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
 
-            .hero-buttons {
-                flex-direction: column;
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .anim-1 {
+            animation: fadeUp 0.6s ease both 0.1s;
+        }
+
+        .anim-2 {
+            animation: fadeUp 0.6s ease both 0.25s;
+        }
+
+        .anim-3 {
+            animation: fadeUp 0.6s ease both 0.4s;
+        }
+
+        .anim-4 {
+            animation: fadeUp 0.6s ease both 0.55s;
+        }
+
+        .anim-5 {
+            animation: fadeUp 0.6s ease both 0.7s;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 960px) {
+            .hero-content {
+                grid-template-columns: 1fr;
             }
 
-            nav {
+            .hero-visual {
+                margin-top: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .bc-w8,
+            .bc-w7,
+            .bc-w9 {
+                grid-column: span 12;
+            }
+
+            .bc-w4,
+            .bc-w5,
+            .bc-w3 {
+                grid-column: span 12;
+            }
+
+            .bc-w6 {
+                grid-column: span 12;
+            }
+
+            .verify-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .links-cluster {
+                grid-template-columns: 1fr;
+            }
+
+            .float-badge,
+            .float-badge-2 {
                 display: none;
             }
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <div class="logo">$NEOFLW</div>
-        <nav>
-            <a href="#verify">Verify</a>
-            <a href="#features">Features</a>
-            <a href="#links">Community</a>
-        </nav>
-    </header>
 
-    <div class="container">
-        <section class="hero">
-            <h1>NEOFLW Token</h1>
-            <p>Native token of NEO Protocol ecosystem</p>
-            <p style="font-size: 1rem; color: #94a3b8;">ERC20 with governance, staking & claims on Base mainnet</p>
-            <div class="hero-buttons">
-                <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" class="btn btn-primary">View on Basescan</a>
-                <a href="https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" class="btn btn-secondary">Swap on Uniswap</a>
+    <nav>
+        <div class="nav-pill">
+            <div class="nav-inner">
+                <a href="#" class="nav-logo"><span class="neo">NEØ</span>FLW</a>
+                <ul class="nav-links">
+                    <li><a href="#tokenomics">Tokenomics</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#chart">Chart</a></li>
+                    <li><a href="#verify">Verify</a></li>
+                </ul>
+                <a href="https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
+                    class="nav-btn" target="_blank" rel="noopener">Buy $NEOFLW ↗</a>
             </div>
-        </section>
+        </div>
+    </nav>
 
-        <section class="info-grid">
-            <div class="info-card">
-                <h3>Contract Address</h3>
-                <p class="token-address">0x41F4ff3d45DED9C1332e4908F637B75fe83F5d6B</p>
-            </div>
-            <div class="info-card">
-                <h3>Network</h3>
-                <p><strong>Base Mainnet</strong><br>Chain ID: 8453</p>
-            </div>
-            <div class="info-card">
-                <h3>Total Supply</h3>
-                <p><strong>1,000,000,000</strong><br>NEOFLW (1 billion)</p>
-            </div>
-        </section>
+    <section class="hero">
+        <div class="wrap">
+            <div class="hero-content">
+                <div>
+                    <div class="hero-eyebrow anim-1">Base Mainnet · Chain ID 8453</div>
+                    <h1 class="hero-title anim-2">
+                        NEØ<br>
+                        <span class="line2">Protocol</span><br>
+                        Token
+                    </h1>
+                    <p class="hero-desc anim-3">
+                        <strong>NEOFLW</strong> is the native token of the NEØ Protocol ecosystem —
+                        ERC-20 with governance, staking and on-chain claims, deployed on Base mainnet.
+                    </p>
+                    <div class="hero-actions anim-4">
+                        <a href="https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
+                            class="btn-fill" target="_blank" rel="noopener">Swap on Uniswap ↗</a>
+                        <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
+                            class="btn-outline" target="_blank" rel="noopener">View on Basescan</a>
+                    </div>
+                    <div class="contract-chip anim-5">
+                        <span class="chip-label">Contract</span>
+                        <span class="chip-addr" id="addr">0x41F4ff3d45DED9C1332e4908F637B75fe83F5d6B</span>
+                        <button class="chip-copy" onclick="copyAddr()">⎘ copy</button>
+                    </div>
+                </div>
 
-        <section id="features">
-            <h2 style="text-align: center; margin: 3rem 0 1rem;">Token Features</h2>
-            <div class="features">
-                <div class="feature-tag">✅ ERC20 Standard</div>
-                <div class="feature-tag">🔥 Burnable</div>
-                <div class="feature-tag">⚡ Permit (Gasless)</div>
-                <div class="feature-tag">🔐 Ownable2Step</div>
-                <div class="feature-tag">🛡️ publicMint</div>
-                <div class="feature-tag">🌉 Bridging Ready</div>
+                <div class="hero-visual anim-3">
+                    <div style="position:relative;width:100%;max-width:340px;margin:0 auto;">
+                        <div class="float-badge-2">⬡ Base Mainnet</div>
+                        <div class="hero-card-main">
+                            <div class="hc-top">
+                                <div class="hc-token">
+                                    <div class="hc-icon"><img
+                                            src="data:image/jpeg;base64,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"
+                                            alt="NEOFLW" /></div>
+                                    <div>
+                                        <div class="hc-name">NEOFLW</div>
+                                        <div class="hc-ticker">NEØ Protocol</div>
+                                    </div>
+                                </div>
+                                <div class="hc-badge">✓ Live</div>
+                            </div>
+                            <div class="hc-supply-label">Total Supply</div>
+                            <div class="hc-supply">1,000,000,000 <span>NEOFLW</span></div>
+                            <div class="hc-divider"></div>
+                            <div class="hc-meta">
+                                <div>
+                                    <div class="hc-meta-label">Network</div>
+                                    <div class="hc-meta-val">Base L2</div>
+                                </div>
+                                <div>
+                                    <div class="hc-meta-label">Standard</div>
+                                    <div class="hc-meta-val">ERC-20</div>
+                                </div>
+                                <div>
+                                    <div class="hc-meta-label">Decimals</div>
+                                    <div class="hc-meta-val">18</div>
+                                </div>
+                                <div>
+                                    <div class="hc-meta-label">Chain ID</div>
+                                    <div class="hc-meta-val">8453</div>
+                                </div>
+                            </div>
+                            <div class="hc-bar">
+                                <div class="hc-bar-row"><span>Circulating</span><span>68%</span></div>
+                                <div class="hc-bar-track">
+                                    <div class="hc-bar-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="float-badge">⚡ Uniswap v3 Pool</div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section style="margin: 3rem 0;">
-            <h2 style="text-align: center; margin-bottom: 1.5rem;">Live Price Chart</h2>
-            <div id="dexscreener-embed">
-                <iframe src="https://dexscreener.com/base/0xba6f7f1d429c61e1714bd94a1c74414289fe52f1c14473ba005edfd042d3f014?embed=1&loadChartSettings=0&trades=0&tabs=0&info=0&chartLeftToolbar=0&chartTimeframesToolbar=0&chartTheme=dark&theme=dark&chartStyle=0&chartType=usd&interval=15"></iframe>
+    <section class="stats-section">
+        <div class="wrap">
+            <div class="stats-row">
+                <div class="stat-cell">
+                    <div class="stat-cell-label">Supply</div>
+                    <div class="stat-cell-val pink">1B</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-cell-label">Network</div>
+                    <div class="stat-cell-val">Base</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-cell-label">Standard</div>
+                    <div class="stat-cell-val">ERC-20</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-cell-label">Status</div>
+                    <div class="stat-cell-val green">✓ Live</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-cell-label">Ticker</div>
+                    <div class="stat-cell-val">$NEOFLW</div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="verify" class="verification-section">
-            <h2>✅ Verified on Blockchain</h2>
-            <p>Contract code verified with exact match on Basescan</p>
-            <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" class="btn btn-primary" style="display: inline-block; margin-top: 1rem;">See Verification</a>
-        </section>
+    <section class="bento-section" id="tokenomics">
+        <div class="wrap">
+            <div class="section-eyebrow">01 — Tokenomics &amp; Features</div>
+            <div class="section-title" id="features">Protocol-grade token</div>
 
-        <section id="links" class="links-section">
-            <a href="https://flowoff.xyz" class="link-btn">🌐 Website</a>
-            <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" class="link-btn">📊 Basescan</a>
-            <a href="https://x.com/NeoProtoco77967" class="link-btn">𝕏 Twitter</a>
-            <a href="https://github.com/NEO-FlowOFF/neoflw-token" class="link-btn">💻 GitHub</a>
-            <a href="https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" class="link-btn">💱 Uniswap</a>
-        </section>
-    </div>
+            <div class="bento">
+
+                <div class="bc bc-supply bc-w8">
+                    <div class="bc-label">Total Fixed Supply</div>
+                    <div class="bc-number-huge">1,000,000,000</div>
+                    <div class="bc-sublabel">NEOFLW — No inflation. No hidden minting. Fixed forever on Base mainnet.
+                    </div>
+                    <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+                        <span
+                            style="padding:0.3rem 0.8rem;border-radius:999px;background:rgba(255,0,204,0.12);border:1px solid rgba(255,0,204,0.22);font-size:0.7rem;color:var(--pink-soft);font-family:var(--mono);">ERC-20</span>
+                        <span
+                            style="padding:0.3rem 0.8rem;border-radius:999px;background:rgba(255,0,204,0.12);border:1px solid rgba(255,0,204,0.22);font-size:0.7rem;color:var(--pink-soft);font-family:var(--mono);">EIP-2612
+                            Permit</span>
+                        <span
+                            style="padding:0.3rem 0.8rem;border-radius:999px;background:rgba(255,0,204,0.12);border:1px solid rgba(255,0,204,0.22);font-size:0.7rem;color:var(--pink-soft);font-family:var(--mono);">Ownable2Step</span>
+                        <span
+                            style="padding:0.3rem 0.8rem;border-radius:999px;background:rgba(255,0,204,0.12);border:1px solid rgba(255,0,204,0.22);font-size:0.7rem;color:var(--pink-soft);font-family:var(--mono);">Burnable</span>
+                    </div>
+                </div>
+
+                <div class="bc bc-verified bc-w4">
+                    <div class="verified-icon">✓</div>
+                    <div class="bc-label">Verification</div>
+                    <div class="bc-title" style="color:var(--green);">On-chain<br>Verified</div>
+                    <div style="font-size:0.78rem;color:var(--text-2);margin-top:0.5rem;line-height:1.6;">Source code
+                        publicly verifiable on Basescan. Zero proxies hiding logic.</div>
+                    <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" target="_blank"
+                        rel="noopener"
+                        style="display:inline-block;margin-top:1.25rem;padding:0.5rem 1rem;border-radius:999px;background:var(--green-dim);border:1px solid rgba(0,255,136,0.25);color:var(--green);font-size:0.75rem;font-weight:600;text-decoration:none;">View
+                        Contract ↗</a>
+                </div>
+
+                <div class="bc bc-w3 bc-network">
+                    <div class="network-ring">⬡</div>
+                    <div class="network-name">Base L2</div>
+                    <div class="network-sub">Chain ID 8453</div>
+                    <div style="font-size:0.75rem;color:var(--text-3);margin-top:0.25rem;">Ethereum Layer 2</div>
+                </div>
+
+                <div class="bc bc-w9">
+                    <div class="bc-label">Token Features</div>
+                    <div class="bc-title">Built for the protocol</div>
+                    <div class="feature-list">
+                        <div class="feature-row">
+                            <div class="feature-row-icon">⟲</div>
+                            <div>
+                                <div style="font-weight:600;color:var(--text);font-size:0.85rem;">Burnable</div>
+                                <div style="font-size:0.75rem;margin-top:0.15rem;">Holders can permanently burn tokens,
+                                    enabling deflationary mechanics.</div>
+                            </div>
+                            <span class="feature-row-badge">EIP-3664</span>
+                        </div>
+                        <div class="feature-row">
+                            <div class="feature-row-icon">⚡</div>
+                            <div>
+                                <div style="font-weight:600;color:var(--text);font-size:0.85rem;">Gasless Approvals
+                                </div>
+                                <div style="font-size:0.75rem;margin-top:0.15rem;">EIP-2612 Permit: off-chain approval
+                                    signatures, zero extra transactions.</div>
+                            </div>
+                            <span class="feature-row-badge">EIP-2612</span>
+                        </div>
+                        <div class="feature-row">
+                            <div class="feature-row-icon">⬡</div>
+                            <div>
+                                <div style="font-weight:600;color:var(--text);font-size:0.85rem;">Ownable 2-Step</div>
+                                <div style="font-size:0.75rem;margin-top:0.15rem;">Two-step ownership transfer prevents
+                                    accidental admin key loss.</div>
+                            </div>
+                            <span class="feature-row-badge">Security</span>
+                        </div>
+                        <div class="feature-row">
+                            <div class="feature-row-icon">⛓</div>
+                            <div>
+                                <div style="font-weight:600;color:var(--text);font-size:0.85rem;">Bridge Ready</div>
+                                <div style="font-size:0.75rem;margin-top:0.15rem;">Designed for multichain via Base
+                                    bridge and LayerZero OFT standard.</div>
+                            </div>
+                            <span class="feature-row-badge">Multichain</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bc bc-code bc-w6">
+                    <div class="bc-label">Contract Interface</div>
+                    <div class="bc-title" style="font-family:var(--mono);font-size:0.95rem;">NeoFlwToken.sol</div>
+                    <div class="code-block">
+                        <span class="code-line"><span class="c-cmt">// NEOFLW ERC-20 · Base Mainnet</span></span>
+                        <span class="code-line"><span class="c-key">contract</span> <span
+                                class="c-pnk">NeoFlwToken</span> <span class="c-key">is</span></span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-val">ERC20</span>,</span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-val">ERC20Burnable</span>,</span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-val">ERC20Permit</span>,</span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-val">Ownable2Step</span></span>
+                        <span class="code-line">{</span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-key">uint256</span> <span
+                                class="c-str">totalSupply</span></span>
+                        <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;= <span
+                                class="c-val">1_000_000_000e18</span>;</span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-cmt">// publicMint · Bridging</span></span>
+                        <span class="code-line">}</span>
+                    </div>
+                </div>
+
+                <div class="bc bc-w6">
+                    <div class="bc-label">Ecosystem Links</div>
+                    <div class="bc-title">Join the network</div>
+                    <div class="links-cluster">
+                        <a href="https://neoflowoff.agency" class="link-tile" target="_blank" rel="noopener"><span
+                                class="link-tile-icon">🌐</span> Website</a>
+                        <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
+                            class="link-tile" target="_blank" rel="noopener"><span class="link-tile-icon">⬡</span>
+                            Basescan</a>
+                        <a href="https://x.com/neoflw_on_chain" class="link-tile" target="_blank" rel="noopener"><span
+                                class="link-tile-icon">𝕏</span> Twitter / X</a>
+                        <a href="https://github.com/NEO-FlowOFF/neoflw-token" class="link-tile" target="_blank"
+                            rel="noopener"><span class="link-tile-icon">◧</span> GitHub</a>
+                        <a href="https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
+                            class="link-tile" target="_blank" rel="noopener"><span class="link-tile-icon">⇄</span>
+                            Uniswap</a>
+                        <a href="https://dexscreener.com/base/0xba6f7f1d429c61e1714bd94a1c74414289fe52f1c14473ba005edfd042d3f014"
+                            class="link-tile" target="_blank" rel="noopener"><span class="link-tile-icon">📊</span>
+                            DexScreener</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="chart-section" id="chart">
+        <div class="wrap">
+            <div class="section-eyebrow">02 — Market</div>
+            <div class="section-title">Live price chart</div>
+            <div class="chart-wrap">
+                <div class="chart-header">
+                    <div class="chart-left">
+                        <div class="chart-icon"><img
+                                src="data:image/jpeg;base64,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"
+                                alt="NEOFLW" /></div>
+                        <div>
+                            <div class="chart-info-name">NEOFLW / USD</div>
+                            <div class="chart-info-sub">Base Mainnet · DexScreener</div>
+                        </div>
+                    </div>
+                    <div class="chart-live">Live</div>
+                </div>
+                <div id="dexscreener-embed"><iframe
+                        src="https://dexscreener.com/base/0xba6f7f1d429c61e1714bd94a1c74414289fe52f1c14473ba005edfd042d3f014?embed=1&loadChartSettings=0&trades=0&tabs=0&info=0&chartLeftToolbar=0&chartDefaultOnMobile=1&chartTheme=dark&theme=dark&chartStyle=0&chartType=usd&interval=15"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="verify-section" id="verify">
+        <div class="wrap">
+            <div class="section-eyebrow">03 — Transparency</div>
+            <div class="section-title">Verified on-chain</div>
+            <div class="verify-grid">
+                <div class="verify-left">
+                    <div class="verify-ok">✓ Basescan Verified</div>
+                    <div class="verify-heading"><span class="ok">Code</span> is law.</div>
+                    <p class="verify-body">Every line of NEOFLW contract code is publicly verifiable. No proxies hiding
+                        logic. No upgradeable surprises. Audit it yourself.</p>
+                    <ul class="verify-checklist">
+                        <li><span class="check">✓</span> Source code match verified on Basescan</li>
+                        <li><span class="check">✓</span> No hidden mint functions beyond publicMint</li>
+                        <li><span class="check">✓</span> Ownable2Step — no single point of failure</li>
+                        <li><span class="check">✓</span> EIP-2612 Permit audited by community</li>
+                    </ul>
+                    <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" class="btn-fill"
+                        target="_blank" rel="noopener">View Contract on Basescan ↗</a>
+                </div>
+                <div class="verify-right">
+                    <div class="code-header">
+                        <div class="dot dot-r"></div>
+                        <div class="dot dot-y"></div>
+                        <div class="dot dot-g"></div>
+                        <span style="margin-left:0.5rem;font-size:0.7rem;color:var(--text-3);">NeoFlwToken.sol</span>
+                    </div>
+                    <div class="code-body">
+                        <span class="code-line"><span class="c-cmt">// SPDX-License-Identifier: MIT</span></span>
+                        <span class="code-line"><span class="c-key">pragma</span> solidity ^0.8.20;</span>
+                        <span class="code-line">&nbsp;</span>
+                        <span class="code-line"><span class="c-key">import</span> <span
+                                class="c-str">"@openzeppelin/ERC20"</span>;</span>
+                        <span class="code-line"><span class="c-key">import</span> <span
+                                class="c-str">"@openzeppelin/ERC20Burnable"</span>;</span>
+                        <span class="code-line"><span class="c-key">import</span> <span
+                                class="c-str">"@openzeppelin/ERC20Permit"</span>;</span>
+                        <span class="code-line"><span class="c-key">import</span> <span
+                                class="c-str">"@openzeppelin/Ownable2Step"</span>;</span>
+                        <span class="code-line">&nbsp;</span>
+                        <span class="code-line"><span class="c-key">contract</span> <span
+                                class="c-pnk">NeoFlwToken</span> <span class="c-key">is</span></span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-val">ERC20</span>, <span
+                                class="c-val">ERC20Burnable</span>,</span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-val">ERC20Permit</span>, <span
+                                class="c-val">Ownable2Step</span></span>
+                        <span class="code-line">{</span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-key">uint256 public constant</span></span>
+                        <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">MAX_SUPPLY</span> = <span
+                                class="c-val">1_000_000_000e18</span>;</span>
+                        <span class="code-line">&nbsp;</span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-cmt">// Base Mainnet · Chain
+                                8453</span></span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-cmt">// 0x41F4ff3d45DED9C...</span></span>
+                        <span class="code-line">}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer>
-        <p>Built with NEO Protocol • <strong>neoflowoff.eth.limo</strong></p>
-        <p style="font-size: 0.9rem; margin-top: 1rem;">© 2026 NEO-FlowOFF. All rights reserved.</p>
+        <div class="footer-inner">
+            <div>
+                <div class="footer-brand"><span class="neo">NEØ</span>FLW</div>
+                <div class="footer-sub">neoflowoff.eth.limo · Flowoff Marketing e Assessoria Digital LTDA</div>
+            </div>
+            <div class="footer-right">
+                <div>© 2026 NEO-FlowOFF. All rights reserved.</div>
+                <div>Code is law. Expand until chaos becomes protocol.</div>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        function copyAddr() {
+            const addr = document.getElementById('addr').textContent.trim()
+            navigator.clipboard.writeText(addr).then(() => {
+                const btn = document.querySelector('.chip-copy')
+                const orig = btn.textContent
+                btn.textContent = '✓ copied'
+                btn.style.color = 'var(--green)'
+                setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2000)
+            })
+        }
+    </script>
 </body>
+
 </html>

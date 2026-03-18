@@ -1,9 +1,4 @@
 {
-  "projectSettings": {
-    "installCommand": "npm install",
-    "buildCommand": "npm run build",
-    "outputDirectory": "dist"
-  },
   "env": {
     "PROJECT_NAME": "NEOFLW Token Site"
   },

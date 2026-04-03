@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEOFLW — NEØ Protocol Native Token</title>
+    <title>NEOFLW — NEØ FLOWOFF Token</title>
     <meta name="description"
-        content="NEOFLW is the native token of the NEØ Protocol ecosystem. ERC-20 on Base mainnet." />
+        content="NEOFLW is the native token of the NEØ FLOWOFF ecosystem. ERC-20 on Base mainnet." />
     <meta property="og:title" content="NEOFLW Token" />
     <meta property="og:image" content="https://neoflw.vercel.app/og-image.png" />
     <meta name="theme-color" content="#FF00CC" />
@@ -33,6 +33,8 @@
             --pink-glow: rgba(255, 0, 204, 0.35);
             --green: #00ff88;
             --green-dim: rgba(0, 255, 136, 0.15);
+            --blue: #0052FF;
+            --blue-dim: rgba(0, 82, 255, 0.15);
             --text: rgba(255, 255, 255, 0.92);
             --text-2: rgba(255, 255, 255, 0.55);
             --text-3: rgba(255, 255, 255, 0.30);
@@ -173,9 +175,51 @@
             transition: opacity 0.2s, transform 0.15s;
         }
 
-        .nav-btn:hover {
+        .nav-wallet-btn:hover {
             opacity: 0.85;
             transform: scale(0.98);
+        }
+
+        .nav-wallet-btn.active:hover::after {
+            content: 'Disconnect';
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            background: #ff4d4d;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .nav-wallet-btn.active {
+            background: var(--glass-b);
+            border: 1px solid var(--border-b);
+            color: var(--text);
+            position: relative;
+        }
+        
+        .nav-inner .nav-wallet-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 1.1rem;
+            border-radius: 999px;
+            background: var(--pink);
+            color: #fff;
+            font-family: var(--display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
         }
 
         /* HERO */
@@ -248,6 +292,25 @@
             background-clip: text;
         }
 
+        .hero-title .token-part {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 0.25em;
+            color: #fff;
+            -webkit-text-fill-color: #fff; /* Force visibility */
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.75rem;
+            border-radius: 6px;
+            background: rgba(255, 0, 204, 0.15);
+            border: 1px solid rgba(255, 0, 204, 0.4);
+            margin-left: 0.75rem;
+            transform: translateY(-0.45rem);
+            font-family: var(--mono);
+            vertical-align: middle;
+        }
+
         .hero-desc {
             font-size: 1rem;
             color: var(--text-2);
@@ -274,8 +337,8 @@
             gap: 0.5rem;
             padding: 0.75rem 1.75rem;
             border-radius: 999px;
-            background: var(--pink);
-            color: #fff;
+            background: var(--green);
+            color: #000;
             font-family: var(--display);
             font-size: 0.9rem;
             font-weight: 700;
@@ -305,10 +368,58 @@
             transition: background 0.2s, border-color 0.2s, transform 0.15s;
         }
 
-        .btn-outline:hover {
+        .links-cluster-footer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .link-tile-v2 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .link-tile-v2:hover {
             background: var(--glass-b);
-            border-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-1px);
+            border-color: var(--border-b);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .link-tile-icon svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-2);
+            opacity: 0.85;
+            display: block;
+        }
+
+        .link-tile-v2:hover .link-tile-icon svg {
+            color: var(--pink);
+            opacity: 1;
+        }
+
+        .footer-area {
+            margin-top: 6rem;
+            padding-bottom: 4rem;
+        }
+
+        .footer-box {
+            padding: 4rem 2rem;
+            background: radial-gradient(circle at top, rgba(255, 0, 204, 0.03), transparent);
+            border-radius: var(--r-xl);
+            border: 1px solid var(--border);
         }
 
         /* CONTRACT CHIP */
@@ -337,9 +448,29 @@
             font-family: var(--mono);
             font-size: 0.78rem;
             color: var(--green);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            word-break: break-all;
+        }
+
+        @media (max-width: 480px) {
+            .contract-chip {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+                padding: 1rem;
+                border-radius: var(--r-lg);
+            }
+
+            .chip-addr {
+                font-size: 0.7rem;
+                line-height: 1.4;
+            }
+
+            .chip-copy {
+                align-self: flex-end;
+                background: var(--glass-b);
+                color: var(--text);
+                padding: 0.4rem 0.8rem;
+            }
         }
 
         .chip-copy {
@@ -730,8 +861,8 @@
         }
 
         .bc-verified {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.10) 0%, rgba(0, 200, 100, 0.05) 100%);
-            border-color: rgba(0, 255, 136, 0.18);
+            background: linear-gradient(135deg, rgba(0, 82, 255, 0.20) 0%, rgba(0, 50, 155, 0.10) 100%);
+            border-color: rgba(0, 82, 255, 0.35);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -741,13 +872,14 @@
             width: 48px;
             height: 48px;
             border-radius: 14px;
-            background: var(--green-dim);
-            border: 1px solid rgba(0, 255, 136, 0.25);
+            background: var(--blue-dim);
+            border: 1px solid rgba(0, 82, 255, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.4rem;
             margin-bottom: 1rem;
+            color: var(--blue);
         }
 
         .bc-title {
@@ -813,16 +945,24 @@
         }
 
         .network-ring {
-            width: 72px;
-            height: 72px;
+            width: 84px;
+            height: 84px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255, 0, 204, 0.2), rgba(120, 0, 255, 0.2));
-            border: 2px solid rgba(255, 0, 204, 0.3);
+            background: radial-gradient(circle, rgba(0, 82, 255, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+            border: 2px solid rgba(0, 82, 255, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
             position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 82, 255, 0.2);
+        }
+
+        .network-ring img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 12px;
         }
 
         .network-ring::after {
@@ -830,7 +970,7 @@
             position: absolute;
             inset: -8px;
             border-radius: 50%;
-            border: 1px solid rgba(255, 0, 204, 0.12);
+            border: 1px solid rgba(0, 82, 255, 0.12);
         }
 
         .network-name {
@@ -987,19 +1127,19 @@
             animation: blink 2s infinite;
         }
 
-        #dexscreener-embed {
+        .chart-embed {
             position: relative;
             width: 100%;
             padding-bottom: 125%;
         }
 
         @media(min-width:1400px) {
-            #dexscreener-embed {
+            .chart-embed {
                 padding-bottom: 65%;
             }
         }
 
-        #dexscreener-embed iframe {
+        .chart-embed iframe {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -1262,6 +1402,166 @@
                 display: none;
             }
         }
+
+        /* Interactive Mint Section */
+        .interactive-mint {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .mint-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mint-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .mint-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            font-family: var(--mono);
+        }
+
+        .mint-actions {
+            width: 100%;
+        }
+
+        .mint-btn {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 1rem;
+            background: var(--green);
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 204, 0.2);
+            font-family: var(--font-primary);
+        }
+
+        .mint-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 30px rgba(255, 0, 204, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .mint-btn:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .mint-btn.connected {
+            background: var(--green);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .base-powered {
+            margin-top: 2rem;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .base-powered:hover {
+            opacity: 1;
+        }
+
+        .supply-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .supply-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--pink-soft), var(--green));
+            width: 0%;
+            transition: width 1s ease-out;
+        }
+
+        .nav-wallet-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-wallet-btn:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-wallet-btn.active {
+            border-color: rgba(0, 255, 136, 0.2);
+            background: rgba(0, 255, 136, 0.05);
+            color: var(--green);
+        }
+
+        .nav-wallet-btn.active:hover {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: rgba(255, 0, 0, 0.3);
+            color: #ff4d4d;
+        }
+
+        .nav-wallet-btn.active:hover .addr-txt {
+            display: none;
+        }
+
+        .nav-wallet-btn.active:hover::after {
+            content: 'Disconnect';
+            font-weight: 700;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #444;
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -1277,8 +1577,9 @@
                     <li><a href="#chart">Chart</a></li>
                     <li><a href="#verify">Verify</a></li>
                 </ul>
-                <a href="https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
-                    class="nav-btn" target="_blank" rel="noopener">Buy $NEOFLW ↗</a>
+                <button id="connect-btn" class="nav-wallet-btn">
+                    <span class="dot"></span> Connect Wallet
+                </button>
             </div>
         </div>
     </nav>
@@ -1290,29 +1591,37 @@
                     <div class="hero-eyebrow anim-1">Base Mainnet · Chain ID 8453</div>
                     <h1 class="hero-title anim-2">
                         NEØ<br>
-                        <span class="line2">Protocol</span><br>
-                        Token
+                        <span class="line2">FlowOFF <span class="token-part">Token</span></span>
                     </h1>
                     <p class="hero-desc anim-3">
-                        <strong>NEOFLW</strong> is the native token of the NEØ Protocol ecosystem —
-                        ERC-20 with governance, staking and on-chain claims, deployed on Base mainnet.
+                        The <strong>NEØ FlowOFF</strong> ecosystem's native token, $NEOFLW, is an ERC-20 that is deployed on the Base mainnet and has governance, staking, and on-chain claims.
                     </p>
                     <div class="hero-actions anim-4">
                         <a href="https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
-                            class="btn-fill" target="_blank" rel="noopener">Swap on Uniswap ↗</a>
+                            class="btn-fill" target="_blank" rel="noopener">Swap on Uniswap <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+                        <a href="https://www.geckoterminal.com/base/pools/0xba6f7f1d429c61e1714bd94a1c74414289fe52f1c14473ba005edfd042d3f014"
+                            class="btn-outline" target="_blank" rel="noopener">CoinGecko <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
                         <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
-                            class="btn-outline" target="_blank" rel="noopener">View on Basescan</a>
-                    </div>
-                    <div class="contract-chip anim-5">
-                        <span class="chip-label">Contract</span>
-                        <span class="chip-addr" id="addr">0x41F4ff3d45DED9C1332e4908F637B75fe83F5d6B</span>
-                        <button class="chip-copy" onclick="copyAddr()">⎘ copy</button>
+                            class="btn-outline" target="_blank" rel="noopener">Basescan</a>
+                        <div class="contract-chip anim-5">
+                            <span class="chip-label">Contract</span>
+                            <div style="background:#000;padding:4px 10px;border-radius:6px;border:1px solid var(--border-b);display:flex;align-items:center;gap:12px;">
+                                <span class="chip-addr" id="addr">0x41F4ff3d45DED9C1332e4908F637B75fe83F5d6B</span>
+                                <button class="chip-copy" onclick="copyAddr()" style="display:flex;align-items:center;gap:4px;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:12px;height:12px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                                    copy
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="hero-visual anim-3">
                     <div style="position:relative;width:100%;max-width:340px;margin:0 auto;">
-                        <div class="float-badge-2">⬡ Base Mainnet</div>
+                        <div class="float-badge-2" style="display:flex;align-items:center;gap:6px;">
+                            <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;color:var(--blue);"><path d="M21 16.5V7.5L12 2.25L3 7.5V16.5L12 21.75L21 16.5ZM12 4.125L18.75 8.25V15.75L12 19.875L5.25 15.75V8.25L12 4.125Z"/></svg>
+                            Base Mainnet
+                        </div>
                         <div class="hero-card-main">
                             <div class="hc-top">
                                 <div class="hc-token">
@@ -1321,10 +1630,13 @@
                                             alt="NEOFLW" /></div>
                                     <div>
                                         <div class="hc-name">NEOFLW</div>
-                                        <div class="hc-ticker">NEØ Protocol</div>
+                                        <div class="hc-ticker">NEØ FlowOFF</div>
                                     </div>
                                 </div>
-                                <div class="hc-badge">✓ Live</div>
+                                <div class="hc-badge" style="display:flex;align-items:center;gap:4px;">
+                                    <svg viewBox="0 0 24 24" fill="currentColor" style="width:10px;height:10px;color:var(--green);"><circle cx="12" cy="12" r="10"/></svg>
+                                    Live
+                                </div>
                             </div>
                             <div class="hc-supply-label">Total Supply</div>
                             <div class="hc-supply">1,000,000,000 <span>NEOFLW</span></div>
@@ -1354,7 +1666,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="float-badge">⚡ Uniswap v3 Pool</div>
+                        <div class="float-badge" style="display:flex;align-items:center;gap:6px;">
+                            <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;color:#ff007a;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> 
+                            Uniswap v3 Pool
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1378,7 +1693,10 @@
                 </div>
                 <div class="stat-cell">
                     <div class="stat-cell-label">Status</div>
-                    <div class="stat-cell-val green">✓ Live</div>
+                    <div class="stat-cell-val green" style="display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:12px;height:12px;"><polyline points="20 6 9 17 4 12"/></svg>
+                        Live
+                    </div>
                 </div>
                 <div class="stat-cell">
                     <div class="stat-cell-label">Ticker</div>
@@ -1391,42 +1709,66 @@
     <section class="bento-section" id="tokenomics">
         <div class="wrap">
             <div class="section-eyebrow">01 — Tokenomics &amp; Features</div>
-            <div class="section-title" id="features">Protocol-grade token</div>
+            <div class="section-title" id="features">Best-in-class token</div>
 
             <div class="bento">
 
-                <div class="bc bc-supply bc-w8">
-                    <div class="bc-label">Total Fixed Supply</div>
-                    <div class="bc-number-huge">1,000,000,000</div>
-                    <div class="bc-sublabel">NEOFLW — No inflation. No hidden minting. Fixed forever on Base mainnet.
+                <div class="bc bc-supply bc-w8 interactive-mint">
+                    <div class="bc-label">On-chain Distribution</div>
+                    <div class="bc-number-huge" id="supply-count">1,000,000,000</div>
+                    <div class="bc-sublabel">$NEOFLW // Maximum supply on base. Minting is limited to one per wallet.</div>
+
+                    <div class="supply-progress">
+                        <div class="supply-bar" id="supply-bar" style="width: 100%;"></div>
                     </div>
-                    <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
-                        <span
-                            style="padding:0.3rem 0.8rem;border-radius:999px;background:rgba(255,0,204,0.12);border:1px solid rgba(255,0,204,0.22);font-size:0.7rem;color:var(--pink-soft);font-family:var(--mono);">ERC-20</span>
-                        <span
-                            style="padding:0.3rem 0.8rem;border-radius:999px;background:rgba(255,0,204,0.12);border:1px solid rgba(255,0,204,0.22);font-size:0.7rem;color:var(--pink-soft);font-family:var(--mono);">EIP-2612
-                            Permit</span>
-                        <span
-                            style="padding:0.3rem 0.8rem;border-radius:999px;background:rgba(255,0,204,0.12);border:1px solid rgba(255,0,204,0.22);font-size:0.7rem;color:var(--pink-soft);font-family:var(--mono);">Ownable2Step</span>
-                        <span
-                            style="padding:0.3rem 0.8rem;border-radius:999px;background:rgba(255,0,204,0.12);border:1px solid rgba(255,0,204,0.22);font-size:0.7rem;color:var(--pink-soft);font-family:var(--mono);">Burnable</span>
+
+                    <div class="mint-card">
+                        <div class="mint-stats">
+                            <div class="mint-stat">
+                                <span class="stat-label">Mint Amount</span>
+                                <span class="stat-value" id="info-amount">1,000 $NEOFLW</span>
+                            </div>
+                            <div class="mint-stat">
+                                <span class="stat-label">Price</span>
+                                <span class="stat-value" id="info-price">0.003 ETH</span>
+                            </div>
+                        </div>
+                        <div class="mint-actions">
+                            <button class="mint-btn" id="action-mint-btn">Connect Wallet to Mint</button>
+                        </div>
+                    </div>
+
+                    <div class="base-powered">
+                        <img src="./public/Base_lockup_white.webp" alt="Powered by Base" height="24">
                     </div>
                 </div>
 
                 <div class="bc bc-verified bc-w4">
-                    <div class="verified-icon">✓</div>
+                    <div class="verified-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:24px;height:24px;"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
                     <div class="bc-label">Verification</div>
-                    <div class="bc-title" style="color:var(--green);">On-chain<br>Verified</div>
+                    <div class="bc-title" style="color:var(--blue);">On-chain<br>Verified</div>
                     <div style="font-size:0.78rem;color:var(--text-2);margin-top:0.5rem;line-height:1.6;">Source code
                         publicly verifiable on Basescan. Zero proxies hiding logic.</div>
                     <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" target="_blank"
                         rel="noopener"
-                        style="display:inline-block;margin-top:1.25rem;padding:0.5rem 1rem;border-radius:999px;background:var(--green-dim);border:1px solid rgba(0,255,136,0.25);color:var(--green);font-size:0.75rem;font-weight:600;text-decoration:none;">View
-                        Contract ↗</a>
+                        style="display:inline-block;margin-top:1.25rem;padding:0.5rem 1rem;border-radius:999px;background:var(--blue-dim);border:1px solid rgba(0,82,255,0.25);color:var(--blue);font-size:0.75rem;font-weight:600;text-decoration:none;">View
+                        Contract <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:10px;height:10px;margin-bottom:-1px;"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></a>
+                    
+                    <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(0,82,255,0.15);display:flex;flex-direction:column;gap:0.75rem;">
+                        <div style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--blue);font-weight:800;opacity:0.7;">Core Technology Partner</div>
+                        <a href="https://nsfactory.xyz" target="_blank" rel="noopener" style="display:inline-block;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='none'">
+                            <img src="./public/logo_name_horizontal_color.png" alt="NEØ SMART FACTORY" style="height:24px;display:block;">
+                        </a>
+                        <div style="font-size:0.7rem;color:var(--text-3);line-height:1.4;">Developed by the NEØ SMART FACTORY team for secure, institutional-grade smart contracts on Base.</div>
+                    </div>
                 </div>
 
                 <div class="bc bc-w3 bc-network">
-                    <div class="network-ring">⬡</div>
+                    <div class="network-ring">
+                        <img src="./public/large_Base_Symbol_Blue_ee3f3fb0a5.png" alt="Base Logo">
+                    </div>
                     <div class="network-name">Base L2</div>
                     <div class="network-sub">Chain ID 8453</div>
                     <div style="font-size:0.75rem;color:var(--text-3);margin-top:0.25rem;">Ethereum Layer 2</div>
@@ -1434,19 +1776,22 @@
 
                 <div class="bc bc-w9">
                     <div class="bc-label">Token Features</div>
-                    <div class="bc-title">Built for the protocol</div>
+                    <div class="bc-title">Built for the ecosystem</div>
                     <div class="feature-list">
                         <div class="feature-row">
-                            <div class="feature-row-icon">⟲</div>
+                            <div class="feature-row-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                            </div>
                             <div>
                                 <div style="font-weight:600;color:var(--text);font-size:0.85rem;">Burnable</div>
-                                <div style="font-size:0.75rem;margin-top:0.15rem;">Holders can permanently burn tokens,
-                                    enabling deflationary mechanics.</div>
+                                <div style="font-size:0.75rem;margin-top:0.15rem;">Holders can permanently burn tokens, enabling deflationary mechanics.</div>
                             </div>
                             <span class="feature-row-badge">EIP-3664</span>
                         </div>
                         <div class="feature-row">
-                            <div class="feature-row-icon">⚡</div>
+                            <div class="feature-row-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            </div>
                             <div>
                                 <div style="font-weight:600;color:var(--text);font-size:0.85rem;">Gasless Approvals
                                 </div>
@@ -1456,16 +1801,19 @@
                             <span class="feature-row-badge">EIP-2612</span>
                         </div>
                         <div class="feature-row">
-                            <div class="feature-row-icon">⬡</div>
+                            <div class="feature-row-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M21 16.5V7.5L12 2.25L3 7.5V16.5L12 21.75L21 16.5ZM12 4.125L18.75 8.25V15.75L12 19.875L5.25 15.75V8.25L12 4.125Z"/></svg>
+                            </div>
                             <div>
                                 <div style="font-weight:600;color:var(--text);font-size:0.85rem;">Ownable 2-Step</div>
-                                <div style="font-size:0.75rem;margin-top:0.15rem;">Two-step ownership transfer prevents
-                                    accidental admin key loss.</div>
+                                <div style="font-size:0.75rem;margin-top:0.15rem;">Two-step ownership transfer prevents accidental admin key loss.</div>
                             </div>
                             <span class="feature-row-badge">Security</span>
                         </div>
                         <div class="feature-row">
-                            <div class="feature-row-icon">⛓</div>
+                            <div class="feature-row-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                            </div>
                             <div>
                                 <div style="font-weight:600;color:var(--text);font-size:0.85rem;">Bridge Ready</div>
                                 <div style="font-size:0.75rem;margin-top:0.15rem;">Designed for multichain via Base
@@ -1496,32 +1844,53 @@
                         <span class="code-line">}</span>
                     </div>
                 </div>
-
-                <div class="bc bc-w6">
-                    <div class="bc-label">Ecosystem Links</div>
-                    <div class="bc-title">Join the network</div>
-                    <div class="links-cluster">
-                        <a href="https://neoflowoff.agency" class="link-tile" target="_blank" rel="noopener"><span
-                                class="link-tile-icon">🌐</span> Website</a>
-                        <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
-                            class="link-tile" target="_blank" rel="noopener"><span class="link-tile-icon">⬡</span>
-                            Basescan</a>
-                        <a href="https://x.com/neoflw_on_chain" class="link-tile" target="_blank" rel="noopener"><span
-                                class="link-tile-icon">𝕏</span> Twitter / X</a>
-                        <a href="https://github.com/NEO-FlowOFF/neoflw-token" class="link-tile" target="_blank"
-                            rel="noopener"><span class="link-tile-icon">◧</span> GitHub</a>
-                        <a href="https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
-                            class="link-tile" target="_blank" rel="noopener"><span class="link-tile-icon">⇄</span>
-                            Uniswap</a>
-                        <a href="https://dexscreener.com/base/0xba6f7f1d429c61e1714bd94a1c74414289fe52f1c14473ba005edfd042d3f014"
-                            class="link-tile" target="_blank" rel="noopener"><span class="link-tile-icon">📊</span>
-                            DexScreener</a>
-                    </div>
-                </div>
-
-            </div>
+             </div>
         </div>
     </section>
+
+    <!-- NEW FOOTER SECTION -->
+    <footer class="footer-area">
+        <div class="wrap">
+            <div class="footer-box">
+                <div class="bc-label" style="text-align: center; margin-bottom: 0.75rem;">Ecosystem Links</div>
+                <div class="bc-title" style="text-align: center; margin-bottom: 2rem;">Join the network</div>
+                <div class="links-cluster-footer">
+                    <a href="https://neoflowoff.agency" class="link-tile-v2" target="_blank" rel="noopener">
+                        <span class="link-tile-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        </span> Website</a>
+                    <a href="https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" class="link-tile-v2" style="border-color:var(--green);color:var(--green);" target="_blank" rel="noopener">
+                        <span class="link-tile-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+                        </span> Buy $NEOFLW</a>
+                    <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" class="link-tile-v2" target="_blank" rel="noopener">
+                        <span class="link-tile-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16.5V7.5L12 2.25L3 7.5V16.5L12 21.75L21 16.5ZM12 4.125L18.75 8.25V15.75L12 19.875L5.25 15.75V8.25L12 4.125Z"/></svg>
+                        </span>
+                        Basescan</a>
+                    <a href="https://x.com/neoflw_on_chain" class="link-tile-v2" target="_blank" rel="noopener">
+                        <span class="link-tile-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932 6.064-6.932zm-1.292 19.49h2.039L6.486 3.24H4.298l13.311 17.403z"/></svg>
+                        </span> Twitter</a>
+                    <a href="https://github.com/NEO-FlowOFF/neoflw-token" class="link-tile-v2" target="_blank" rel="noopener">
+                        <span class="link-tile-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.041-1.416-4.041-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </span> GitHub</a>
+                    <a href="https://dexscreener.com/base/0xba6f7f1d429c61e1714bd94a1c74414289fe52f1c14473ba005edfd042d3f014" class="link-tile-v2" target="_blank" rel="noopener">
+                        <span class="link-tile-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                        </span>
+                        DexScreener</a>
+                </div>
+                
+                <div class="footer-note" style="margin-top: 4rem; text-align: center; color: var(--text-3); font-size: 0.7rem; border-top: 1px solid var(--border); padding-top: 2rem;">
+                    &copy; 2026 NEØ Protocol. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
 
     <section class="chart-section" id="chart">
         <div class="wrap">
@@ -1534,14 +1903,14 @@
                                 src="data:image/jpeg;base64,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"
                                 alt="NEOFLW" /></div>
                         <div>
-                            <div class="chart-info-name">NEOFLW / USD</div>
-                            <div class="chart-info-sub">Base Mainnet · DexScreener</div>
+                            <div class="chart-info-name">NEOFLW / ETH</div>
+                            <div class="chart-info-sub">Base Mainnet · GeckoTerminal</div>
                         </div>
                     </div>
                     <div class="chart-live">Live</div>
                 </div>
-                <div id="dexscreener-embed"><iframe
-                        src="https://dexscreener.com/base/0xba6f7f1d429c61e1714bd94a1c74414289fe52f1c14473ba005edfd042d3f014?embed=1&loadChartSettings=0&trades=0&tabs=0&info=0&chartLeftToolbar=0&chartDefaultOnMobile=1&chartTheme=dark&theme=dark&chartStyle=0&chartType=usd&interval=15"></iframe>
+                <div class="chart-embed">
+                    <iframe height="100%" width="100%" id="geckoterminal-embed" title="Embed NEOFLW / ETH 0.3%" src="https://www.geckoterminal.com/base/pools/0xba6f7f1d429c61e1714bd94a1c74414289fe52f1c14473ba005edfd042d3f014?embed=1&info=0&swaps=0&grayscale=0&light_chart=0&chart_type=market_cap&resolution=5m" frameborder="0" allow="clipboard-write" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -1553,15 +1922,18 @@
             <div class="section-title">Verified on-chain</div>
             <div class="verify-grid">
                 <div class="verify-left">
-                    <div class="verify-ok">✓ Basescan Verified</div>
+                    <div class="verify-ok" style="display:flex;align-items:center;gap:8px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px;"><polyline points="20 6 9 17 4 12"/></svg>
+                        Basescan Verified
+                    </div>
                     <div class="verify-heading"><span class="ok">Code</span> is law.</div>
                     <p class="verify-body">Every line of NEOFLW contract code is publicly verifiable. No proxies hiding
                         logic. No upgradeable surprises. Audit it yourself.</p>
                     <ul class="verify-checklist">
-                        <li><span class="check">✓</span> Source code match verified on Basescan</li>
-                        <li><span class="check">✓</span> No hidden mint functions beyond publicMint</li>
-                        <li><span class="check">✓</span> Ownable2Step — no single point of failure</li>
-                        <li><span class="check">✓</span> EIP-2612 Permit audited by community</li>
+                        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:10px;height:10px;"><polyline points="20 6 9 17 4 12"/></svg></span> Source code match verified on Basescan</li>
+                        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:10px;height:10px;"><polyline points="20 6 9 17 4 12"/></svg></span> No hidden mint functions beyond publicMint</li>
+                        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:10px;height:10px;"><polyline points="20 6 9 17 4 12"/></svg></span> Ownable2Step — no single point of failure</li>
+                        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:10px;height:10px;"><polyline points="20 6 9 17 4 12"/></svg></span> EIP-2612 Permit audited by community</li>
                     </ul>
                     <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" class="btn-fill"
                         target="_blank" rel="noopener">View Contract on Basescan ↗</a>
@@ -1599,7 +1971,7 @@
                         <span class="code-line">&nbsp;</span>
                         <span class="code-line">&nbsp;&nbsp;<span class="c-cmt">// Base Mainnet · Chain
                                 8453</span></span>
-                        <span class="code-line">&nbsp;&nbsp;<span class="c-cmt">// 0x41F4ff3d45DED9C...</span></span>
+                        <span class="code-line">&nbsp;&nbsp;<span class="c-cmt">// 0x41F4ff3d45DED9C1332e4908F637B75fe83F5d6B</span></span>
                         <span class="code-line">}</span>
                     </div>
                 </div>
@@ -1611,7 +1983,7 @@
         <div class="footer-inner">
             <div>
                 <div class="footer-brand"><span class="neo">NEØ</span>FLW</div>
-                <div class="footer-sub">neoflowoff.eth.limo · Flowoff Marketing e Assessoria Digital LTDA</div>
+                <div class="footer-sub">neoflowoff.eth.limo · NEØ Flowoff Marketing e Assessoria Digital LTDA</div>
             </div>
             <div class="footer-right">
                 <div>© 2026 NEO-FlowOFF. All rights reserved.</div>
@@ -1620,7 +1992,251 @@
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.1/ethers.umd.min.js"></script>
     <script>
+        const CONTRACT_ADDRESS = "0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b";
+        const ABI = [
+            "function getContractInfo() external view returns (uint256 currentSupply, uint256 maxSupply, uint256 mintPrice, uint256 mintAmount, bool mintEnabled, address bridge)",
+            "function publicMint() external payable",
+            "function hasPublicMinted(address user) external view returns (bool)",
+            "function totalSupply() external view returns (uint256)",
+            "function symbol() external view returns (string)"
+        ];
+
+        let provider, signer, contract;
+        let userAddress = null;
+
+        async function init() {
+            // Default provider for read-only data (Base RPC)
+            const baseRpc = "https://mainnet.base.org";
+            const readProvider = new ethers.JsonRpcProvider(baseRpc);
+            const readContract = new ethers.Contract(CONTRACT_ADDRESS, ABI, readProvider);
+
+            try {
+                const info = await readContract.getContractInfo();
+                updateUI(info);
+            } catch (e) {
+                console.error("Failed to load contract info:", e);
+                // Fallback to static info if RPC fails
+                document.getElementById('supply-count').textContent = "1,000,000,000";
+            }
+
+            setupEventListeners();
+        }
+
+        function updateUI(info) {
+            const currentSupply = ethers.formatEther(info.currentSupply);
+            const maxSupply = ethers.formatEther(info.maxSupply);
+            const price = ethers.formatEther(info.mintPrice);
+            const amount = ethers.formatEther(info.mintAmount);
+            const enabled = info.mintEnabled;
+
+            document.getElementById('supply-count').textContent = Number(currentSupply).toLocaleString('en-US');
+            document.getElementById('info-amount').textContent = `${Number(amount).toLocaleString()} $NEOFLW`;
+            document.getElementById('info-price').textContent = `${price} ETH`;
+
+            const percentage = (Number(currentSupply) / Number(maxSupply)) * 100;
+            document.getElementById('supply-bar').style.width = `${percentage}%`;
+
+            if (!enabled) {
+                const btn = document.getElementById('action-mint-btn');
+                btn.disabled = true;
+                btn.textContent = "Minting Disabled";
+            }
+        }
+
+        async function checkNetwork() {
+            const network = await provider.getNetwork();
+            if (network.chainId !== 8453n) { // 8453 is Base Mainnet
+                try {
+                    await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: '0x2105' }], // 0x2105 = 8453
+                    });
+                } catch (switchError) {
+                    // This error code indicates that the chain has not been added to MetaMask.
+                    if (switchError.code === 4902) {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: '0x2105',
+                                chainName: 'Base Mainnet',
+                                nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+                                rpcUrls: ['https://mainnet.base.org'],
+                                blockExplorerUrls: ['https://basescan.org']
+                            }],
+                        });
+                    } else {
+                        throw switchError;
+                    }
+                }
+            }
+        }
+
+        async function toggleWallet() {
+            if (userAddress) {
+                // Disconnect logic (Clear app state)
+                userAddress = null;
+                signer = null;
+                contract = null;
+
+                const connBtn = document.getElementById('connect-btn');
+                connBtn.innerHTML = `Connect Wallet`;
+                connBtn.classList.remove('active');
+                
+                const mintBtn = document.getElementById('action-mint-btn');
+                mintBtn.textContent = "Connect Wallet to Mint";
+                mintBtn.classList.remove('connected');
+                mintBtn.disabled = false;
+                mintBtn.style.background = ""; // Reset success color if needed
+
+                console.log("App state cleared.");
+            } else {
+                await connectWallet();
+            }
+        }
+
+        async function connectWallet() {
+            if (window.ethereum) {
+                try {
+                    provider = new ethers.BrowserProvider(window.ethereum);
+                    
+                    // Force network check
+                    await checkNetwork();
+                    
+                    const accounts = await provider.send("eth_requestAccounts", []);
+                    const addr = accounts[0];
+                    const signerInstance = await provider.getSigner();
+
+                    // STEP 2: Legal Signature (To avoid legal issues)
+                    const termsMsg = `Welcome to NEØ FlowOFF!\n\nBy signing this message, you confirm that you have read and agree to the Terms of Service. You acknowledge that:\n1. $NEOFLW is a utility token for the NEØ ecosystem.\n2. You are not a resident of a sanctioned or prohibited jurisdiction.\n3. You interact with this protocol at your own risk.\n\nAddress: ${addr}`;
+                    
+                    try {
+                        await signerInstance.signMessage(termsMsg);
+                    } catch (e) {
+                        console.error("Signature rejected:", e);
+                        throw new Error("Terms of Service signature is required to use this protocol. Please try again and sign the message in your wallet.");
+                    }
+
+                    // Only set state if SIGNED
+                    userAddress = addr;
+                    signer = signerInstance;
+                    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+
+                    // Update Top Nav Button
+                    const shortAddr = `${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
+                    const connBtn = document.getElementById('connect-btn');
+                    connBtn.innerHTML = `<span class="dot" style="background:var(--green)"></span> <span class="addr-txt">${shortAddr}</span>`;
+                    connBtn.classList.add('active');
+
+                    // Check status for Mint
+                    const hasMinted = await contract.hasPublicMinted(userAddress);
+                    const mintBtn = document.getElementById('action-mint-btn');
+                    
+                    if (hasMinted) {
+                        mintBtn.disabled = true;
+                        mintBtn.textContent = "Already Minted";
+                    } else {
+                        mintBtn.textContent = "Mint Now";
+                        mintBtn.classList.add('connected');
+                    }
+
+                } catch (error) {
+                    console.error("Connection failed:", error);
+                    let msg = error.message || "Failed to connect wallet.";
+                    if (error.code === 'ACTION_REJECTED' || error.code === 4001) msg = "User rejected connection or signature.";
+                    if (error.code === 'BAD_DATA') msg = "Network error: Please ensure you are on Base Mainnet.";
+                    alert(msg);
+                }
+            } else {
+                alert("Please install Metamask or another web3 wallet.");
+            }
+        }
+
+        async function doMint() {
+            if (!window.ethereum) {
+                alert("Web3 wallet not found");
+                return;
+            }
+
+            try {
+                // Refresh provider and check network
+                provider = new ethers.BrowserProvider(window.ethereum);
+                await checkNetwork();
+                
+                if (!signer) {
+                    await connectWallet();
+                    if (!signer) return;
+                }
+
+                const mintBtn = document.getElementById('action-mint-btn');
+                mintBtn.textContent = "Checking Balance...";
+                mintBtn.disabled = true;
+
+                // Re-instantiate contract with signer
+                contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+
+                // Fetch balance and price for verification
+                const balance = await provider.getBalance(userAddress);
+                const info = await contract.getContractInfo();
+                const price = info.mintPrice;
+
+                console.log("Wallet Balance:", ethers.formatEther(balance), "ETH");
+                console.log("Mint Price:", ethers.formatEther(price), "ETH");
+
+                if (balance < price) {
+                    throw new Error(`Insufficient funds: You have ${Number(ethers.formatEther(balance)).toFixed(5)} ETH but need ${ethers.formatEther(price)} ETH + gas.`);
+                }
+
+                mintBtn.textContent = "Processing Transaction...";
+                
+                // Call publicMint with MINT_PRICE
+                const tx = await contract.publicMint({ 
+                    value: price 
+                });
+                
+                mintBtn.textContent = "Waiting Confirmation...";
+                const receipt = await tx.wait();
+
+                if (receipt.status === 1) {
+                    mintBtn.textContent = "✓ Success!";
+                    mintBtn.style.background = "var(--green)";
+                    mintBtn.style.color = "#000";
+                    setTimeout(() => init(), 3000);
+                } else {
+                    throw new Error("Transaction failed on-chain");
+                }
+
+            } catch (error) {
+                console.error("Mint failed:", error);
+                const mintBtn = document.getElementById('action-mint-btn');
+                mintBtn.textContent = "Mint Now";
+                mintBtn.disabled = false;
+                
+                let errorMsg = "Transaction failed. Please try again.";
+                
+                // Detailed error handling
+                if (error.code === 'ACTION_REJECTED' || error.code === 4001) {
+                    errorMsg = "User rejected transaction.";
+                } else if (error.code === 'BAD_DATA') {
+                    errorMsg = "Network error: Make sure you are on Base network.";
+                } else if (error.message && error.message.includes("Insufficient funds")) {
+                    errorMsg = error.message;
+                } else if (error.message && error.message.includes("insufficient funds")) {
+                    errorMsg = "Wallet balance too low to cover Mint Price + Gas.";
+                } else if (error.reason) {
+                    errorMsg = `Contract error: ${error.reason}`;
+                }
+                
+                alert(errorMsg);
+            }
+        }
+
+        function setupEventListeners() {
+            document.getElementById('connect-btn').addEventListener('click', toggleWallet);
+            document.getElementById('action-mint-btn').addEventListener('click', doMint);
+        }
+
         function copyAddr() {
             const addr = document.getElementById('addr').textContent.trim()
             navigator.clipboard.writeText(addr).then(() => {
@@ -1631,6 +2247,9 @@
                 setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 2000)
             })
         }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 

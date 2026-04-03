@@ -13,17 +13,17 @@ help:
 	@echo "  make commit   - Executa o fluxo de commit e push seguro (NΞØ Protocol)"
 
 install:
-	npm install
+	pnpm install
 
 dev:
 	npx serve .
 
 audit:
-	npm audit
+	pnpm audit
 
 commit:
 	@echo "🚀 Iniciando fluxo NΞØ Protocol..."
-	npm audit
+	pnpm audit
 	git status
 	@echo "Digite o tipo do commit (feat, fix, docs, style, refactor, chore):"
 	@read type; \

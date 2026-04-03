@@ -1,10 +1,13 @@
 {
+  "framework": null,
+  "trailingSlash": false,
+  "cleanUrls": true,
   "env": {
     "PROJECT_NAME": "NEOFLW Token webapp"
   },
   "rewrites": [
     {
-      "source": "/",
+      "source": "/((?!public/).*)",
       "destination": "/index.html"
     }
   ],

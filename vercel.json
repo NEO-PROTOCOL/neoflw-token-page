@@ -1,6 +1,6 @@
 {
   "env": {
-    "PROJECT_NAME": "NEOFLW Token Site"
+    "PROJECT_NAME": "NEOFLW Token webapp"
   },
   "rewrites": [
     {

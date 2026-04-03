@@ -1,6 +1,9 @@
-# NEOFLW Token - Official Site
+# NEOFLW Token utility
 
-🎯 **neoflowoff.eth.limo** - Minimal landing page for NEOFLW token verification and information
+ **neoflw.eth**  
+ **neoflw.vercel.app**
+
+ -Minimal landing page for NEOFLW token verification and information
 
 ## 🚀 Features
 
@@ -21,26 +24,26 @@
 
 ## 🔗 Links
 
-- **Website:** https://neoflowoff.agency
-- **Twitter:** https://x.com/neoflow_on_chain
-- **GitHub:** https://github.com/NEO-FlowOFF/neoflw-token
-- **Basescan:** https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b
-- **Uniswap:** https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b
+- **Website:** <https://neoflowoff.agency>
+- **Twitter:** <https://x.com/neoflow_on_chain>
+- **GitHub:** <https://github.com/NEO-FlowOFF/neoflw-token>
+- **Basescan:** <https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b>
+- **Uniswap:** <https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b>
 
 ## 🛠️ Development
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Run dev server
-npm run dev
+pnpm run dev
 
 # Build for production
-npm run build
+pnpm run build
 
 # Deploy to Vercel
-npm run deploy
+pnpm run deploy
 ```
 
 ## 📝 Deployment
@@ -48,8 +51,9 @@ npm run deploy
 Deployed on Vercel with custom domain configuration.
 
 To access via ENS:
-- Set ENS record `neoflowoff.eth` → IPFS hash or Vercel domain
-- Access via `neoflowoff.eth.limo` (Cloudflare/EthDNS gateway)
+
+- Set ENS record `neoflw.eth` → IPFS hash or Vercel domain
+- Access via `neoflowoff.eth.limo` (Cloudflare/EthDNS gateway) == confirmar
 
 ## 📄 License
 

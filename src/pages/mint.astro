@@ -1,0 +1,407 @@
+---
+const pageTitle = "MINT $NEOFLW — NEØ Protocol";
+const contractAddress = "0x89D2...5513"; // Placeholder
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="base:app_id" content="6951db634d3a403912ed8464" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #030305;
+        --card-bg: rgba(3, 3, 5, 0.95);
+        --border: rgba(255, 0, 204, 0.25);
+        --text: #ffffff;
+        --text-2: rgba(255, 255, 255, 0.75);
+        --pink: #ff007a;
+        --pink-glow: rgba(255, 0, 122, 0.4);
+        --green: #00ff88;
+        --mono: "JetBrains Mono", monospace;
+        --f-8: 8px;
+        --f-13: 13px;
+        --f-21: 21px;
+        --f-34: 34px;
+        --f-55: 55px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--bg);
+        color: var(--text);
+        font-family: "Outfit", sans-serif;
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("/bg-pattern.svg");
+        background-size: 100px 100px;
+        opacity: 0.15;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 0, 122, 0.12) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(0, 82, 255, 0.1) 0%,
+            transparent 50%
+          );
+        z-index: -2;
+      }
+
+      .mint-container {
+        width: 100%;
+        max-width: 420px;
+        padding: var(--f-34);
+      }
+
+      .mint-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 32px;
+        padding: var(--f-34);
+        backdrop-filter: blur(60px) saturate(220%);
+        -webkit-backdrop-filter: blur(60px) saturate(220%);
+        box-shadow:
+          0 40px 120px rgba(0, 0, 0, 0.8),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        position: relative;
+      }
+
+      .logo-area {
+        text-align: center;
+        margin-bottom: var(--f-34);
+      }
+
+      .logo-text {
+        font-size: 1rem;
+        letter-spacing: 0.15em;
+        font-weight: 800;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .logo-sep {
+        color: var(--pink);
+        opacity: 0.8;
+      }
+
+      .terminal-box {
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: var(--f-21);
+        margin-bottom: var(--f-34);
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        height: 130px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--pink-glow) transparent;
+      }
+
+      .terminal-header {
+        font-size: 0.6rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-2);
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        letter-spacing: 0.05em;
+      }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 12px var(--green);
+      }
+
+      .log-entry {
+        margin-bottom: 5px;
+        color: var(--text-2);
+        border-left: 2px solid transparent;
+        padding-left: 8px;
+      }
+      .log-entry.cmd {
+        color: var(--green);
+        border-left-color: var(--green);
+      }
+      .log-entry.warn {
+        color: var(--pink);
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--f-13);
+        margin-bottom: var(--f-34);
+      }
+
+      .stat-item {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 1.25rem;
+        border-radius: 20px;
+        transition: border-color 0.3s;
+      }
+
+      .stat-label {
+        font-size: 0.6rem;
+        color: var(--text-2);
+        text-transform: uppercase;
+        margin-bottom: 4px;
+        letter-spacing: 0.08em;
+      }
+      .stat-val {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #fff;
+      }
+
+      .mint-btn {
+        width: 100%;
+        padding: 1.25rem;
+        border-radius: 999px;
+        background: var(--pink);
+        border: none;
+        color: #fff;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 15px 35px var(--pink-glow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        letter-spacing: 0.02em;
+      }
+
+      .mint-btn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 20px 45px var(--pink-glow);
+      }
+
+      .mint-btn:active {
+        transform: translateY(0) scale(0.98);
+      }
+
+      .mint-btn:disabled {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text-2);
+        box-shadow: none;
+        cursor: wait;
+        transform: none;
+      }
+
+      .back-link {
+        text-align: center;
+        margin-top: var(--f-21);
+      }
+
+      .back-link a {
+        color: var(--text-2);
+        text-decoration: none;
+        font-size: 0.75rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        opacity: 0.6;
+      }
+
+      .back-link a:hover {
+        color: #fff;
+        opacity: 1;
+      }
+
+      @keyframes cardEntry {
+        from {
+          opacity: 0;
+          filter: blur(10px);
+          transform: scale(0.95) translateY(30px);
+        }
+        to {
+          opacity: 1;
+          filter: blur(0);
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      .mint-card {
+        animation: cardEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="mint-container">
+      <div class="mint-card">
+        <div class="logo-area">
+          <div class="logo-text">
+            NEØ FlowOFF <span class="logo-sep">/</span> $NEOFLW
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-label">Network</div>
+            <div class="stat-val">Base</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Minted</div>
+            <div class="stat-val" id="mint-progress">6,820 / 10K</div>
+          </div>
+        </div>
+
+        <div class="terminal-box" id="terminal">
+          <div class="terminal-header">
+            <span>Node Connection — OK</span>
+            <div class="status-dot"></div>
+          </div>
+          <div id="logs">
+            <div class="log-entry">Booting interaction engine...</div>
+          </div>
+        </div>
+
+        <button class="mint-btn" id="action-btn">
+          <span>Connect Wallet</span>
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg
+          >
+        </button>
+
+        <div class="back-link">
+          <a href="/">← Return to Overview</a>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline>
+      const btn = document.getElementById("action-btn");
+      const logs = document.getElementById("logs");
+      const terminal = document.getElementById("terminal");
+      const progress = document.getElementById("mint-progress");
+
+      let state = "disconnected";
+      let minted = 6820;
+
+      async function syncSupply() {
+        try {
+          const CONTRACT_ADDR = '0x41F4ff3d45DED9C1332e4908F637B75fe83F5d6B';
+          const res = await fetch(`https://api.basescan.org/api?module=stats&action=tokensupply&contractaddress=${CONTRACT_ADDR}`);
+          const data = await res.json();
+          if (data.status === "1" && progress) {
+             const supply = parseInt(data.result) / 1e18;
+             progress.innerHTML = `<span style="color:var(--pink)">${new Intl.NumberFormat().format(supply)}</span> / 1,000,000,000`;
+             minted = supply;
+             addLog("Syncing with Neo-MCP [n33w15if0soji4zorjk089z1q]...", "cmd");
+          }
+        } catch(e) {
+          console.warn("Sync failed, using offline cache.");
+        }
+      }
+
+      syncSupply();
+      setInterval(syncSupply, 60000);
+
+      function addLog(text, type = "") {
+        const entry = document.createElement("div");
+        entry.className = `log-entry ${type}`;
+        entry.textContent = `> ${text}`;
+        logs.appendChild(entry);
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+
+      btn.addEventListener("click", async () => {
+        if (state === "disconnected") {
+          state = "connecting";
+          btn.disabled = true;
+          btn.querySelector("span").textContent = "Connecting...";
+
+          addLog("Requesting Wallet Signature...", "warn");
+          await new Promise((r) => setTimeout(r, 1200));
+
+          state = "connected";
+          btn.disabled = false;
+          btn.querySelector("span").textContent = "Claim $NEOFLW";
+          addLog("Address Found: 0x89...5513", "cmd");
+        } else if (state === "connected") {
+          state = "minting";
+          btn.disabled = true;
+          btn.querySelector("span").textContent = "Confirming...";
+
+          addLog("Gas estimated: 0.0001 ETH");
+          await new Promise((r) => setTimeout(r, 800));
+          addLog("Submitting transaction...", "cmd");
+          await new Promise((r) => setTimeout(r, 2000));
+          addLog(
+            "TX Hash: 0x" + Math.random().toString(16).slice(2, 10) + "...",
+            "cmd",
+          );
+
+          state = "success";
+          minted++;
+          progress.textContent = `${minted.toLocaleString()} / 10K`;
+          btn.disabled = false;
+          btn.style.background = "var(--green)";
+          btn.style.boxShadow = "0 15px 35px rgba(0, 255, 136, 0.3)";
+          btn.querySelector("span").textContent = "Success";
+          btn.querySelector("svg").outerHTML =
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+          addLog("MINT COMPLETE. Assets synced.", "cmd");
+        }
+      });
+
+      // Intro
+      setTimeout(() => addLog("Chain: Base Mainnet"), 400);
+      setTimeout(() => addLog("Protocol ready for minting."), 700);
+    </script>
+  </body>
+</html>

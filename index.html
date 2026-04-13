@@ -689,18 +689,8 @@
             height: 100%;
             border-radius: 999px;
             background: linear-gradient(90deg, var(--pink), #cc00ff);
-            width: 68%;
-            animation: barGrow 1.5s ease both 0.8s;
-        }
-
-        @keyframes barGrow {
-            from {
-                width: 0;
-            }
-
-            to {
-                width: 68%;
-            }
+            width: 0%;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .float-badge {
@@ -1892,9 +1882,9 @@
                                 </div>
                             </div>
                             <div class="hc-bar">
-                                <div class="hc-bar-row"><span>Circulating</span><span>68%</span></div>
+                                <div class="hc-bar-row"><span>Circulating</span><span id="hc-circ-pct">—</span></div>
                                 <div class="hc-bar-track">
-                                    <div class="hc-bar-fill"></div>
+                                    <div class="hc-bar-fill" id="hc-bar-fill" style="width:0%"></div>
                                 </div>
                             </div>
                             
@@ -2586,10 +2576,18 @@
                 const supplyData = await supplyRes.json();
                 if (supplyData.status === '1') {
                     const supply = parseInt(supplyData.result) / 1e18;
+                    const pct = Math.round((supply / MAX_SUPPLY) * 100);
+
                     const el = document.getElementById('supply-count');
                     if (el) el.textContent = supply.toLocaleString();
                     const bar = document.getElementById('supply-bar');
-                    if (bar) bar.style.width = `${(supply / MAX_SUPPLY) * 100}%`;
+                    if (bar) bar.style.width = `${pct}%`;
+
+                    // Hero card circulating bar
+                    const hcPct = document.getElementById('hc-circ-pct');
+                    if (hcPct) hcPct.textContent = pct + '%';
+                    const hcFill = document.getElementById('hc-bar-fill');
+                    if (hcFill) hcFill.style.width = pct + '%';
                 }
             } catch (err) {
                 console.warn('Supply fetch failed:', err);

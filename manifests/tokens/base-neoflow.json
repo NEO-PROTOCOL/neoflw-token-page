@@ -1,5 +1,5 @@
 {
-  "name": "NEOFLW",
+  "name": "NEOFlowOFF",
   "symbol": "NEOFLW",
   "status": "canonical",
   "chain": {
@@ -12,11 +12,11 @@
     "address": "0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b",
     "decimals": 18,
     "links": {
-      "token": "https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
+      "token": "https://basescan.org/address/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b#code"
     },
     "source": {
       "factory": "NEO SMART FACTORY v0.5.3",
-      "repo": "https://github.com/neo-smart-token-factory/smart-core",
+      "repo": "https://www.nsfactory.xyz",
       "maintainer": "NEO Protocol (team@neosmart.factory)",
       "attribution": "Powered by NEO SMART FACTORY"
     }
@@ -27,6 +27,6 @@
     "neo-flowoff"
   ],
   "notes": [
-    "Canonical token for NEO-FlowOFF ecosystem. Base mainnet deployment via NSFactory."
+    "Canonical token for NEØ-FlowOFF ecosystem <https://www.neoflowoff.agency> . Base mainnet deployment via NEØ SMART FACTORY."
   ]
 }

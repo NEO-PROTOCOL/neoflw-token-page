@@ -695,18 +695,8 @@ const {
         height: 100%;
         border-radius: 999px;
         background: linear-gradient(90deg, var(--pink), #cc00ff);
-        width: 68%;
-        animation: barGrow 1.5s ease both 0.8s;
-    }
-
-    @keyframes barGrow {
-        from {
-            width: 0;
-        }
-
-        to {
-            width: 68%;
-        }
+        width: 0%;
+        transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .float-badge {

@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Read(//Users/nettomello/neomello/NEO-FlowOFF/neoflw-token-page /.claude/**)",
-      "Bash(curl -sI https://neoflw.vercel.app/)"
+      "Bash(curl -sI https://neoflw.vercel.app/)",
+      "Bash(pnpm build:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(identify /Users/nettomello/neomello/NEO-FlowOFF/neoflw-token-page/public/og-image.png)"
     ]
   }
 }

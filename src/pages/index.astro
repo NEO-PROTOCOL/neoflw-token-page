@@ -460,10 +460,18 @@ import Footer from '../components/Footer.astro';
             const supplyData = await supplyRes.json();
             if (supplyData.status === '1') {
                 const supply = parseInt(supplyData.result) / 1e18;
+                const pct = Math.round((supply / MAX_SUPPLY) * 100);
+
                 const el = document.getElementById('supply-count');
                 if (el) el.textContent = supply.toLocaleString();
                 const bar = document.getElementById('supply-bar');
-                if (bar) bar.style.width = `${(supply / MAX_SUPPLY) * 100}%`;
+                if (bar) bar.style.width = `${pct}%`;
+
+                // Hero card circulating bar
+                const hcPct = document.getElementById('hc-circ-pct');
+                if (hcPct) hcPct.textContent = pct + '%';
+                const hcFill = document.getElementById('hc-bar-fill');
+                if (hcFill) hcFill.style.width = pct + '%';
             }
         } catch (err) {
             console.warn('Supply fetch failed:', err);

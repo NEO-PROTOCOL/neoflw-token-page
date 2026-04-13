@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/nettomello/neomello/NEO-FlowOFF/neoflw-token-page /.claude/**)",
+      "Bash(curl -sI https://neoflw.vercel.app/)"
+    ]
+  }
+}

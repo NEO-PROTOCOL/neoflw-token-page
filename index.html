@@ -2417,14 +2417,15 @@
         async function connectWallet() {
             if (window.ethereum) {
                 try {
-                    // 1. Force network check/switch BEFORE creating provider
-                    await checkNetwork();
-
-                    // 2. Clear any existing provider and re-init
+                    // 1. Request accounts FIRST — wallet must be connected before switching chain
                     provider = new ethers.BrowserProvider(window.ethereum);
-                    
                     const accounts = await provider.send("eth_requestAccounts", []);
                     const addr = accounts[0];
+
+                    // 2. Switch/add Base network NOW that wallet is connected
+                    await checkNetwork();
+
+                    // 3. Re-fetch signer after potential network switch
                     const signerInstance = await provider.getSigner();
 
                     // STEP 2: Legal Signature (To avoid legal issues)

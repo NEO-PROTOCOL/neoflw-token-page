@@ -136,17 +136,18 @@ import Footer from '../components/Footer.astro';
     async function connectWallet() {
         if (window.ethereum) {
             try {
-                // 1. Force network check/switch BEFORE creating provider
-                await checkNetwork();
-
-                // 2. Clear any existing provider and re-init
+                // 1. Request accounts FIRST — wallet must be connected before switching chain
                 provider = new ethers.BrowserProvider(window.ethereum);
-
                 const accounts = await provider.send("eth_requestAccounts", []);
                 const addr = accounts[0];
+
+                // 2. Switch/add Base network NOW that wallet is connected
+                await checkNetwork();
+
+                // 3. Re-fetch signer after potential network switch
                 const signerInstance = await provider.getSigner();
 
-                // STEP 2: Legal Signature (To avoid legal issues)
+                // STEP 4: Legal Signature (To avoid legal issues)
                 const termsMsg = `Welcome to NEØ FlowOFF!\n\nBy signing this message, you confirm that you have read and agree to the Terms of Service. You acknowledge that:\n1. $NEOFLW is a utility token for the NEØ ecosystem.\n2. You are not a resident of a sanctioned or prohibited jurisdiction.\n3. You interact with this protocol at your own risk.\n\nAddress: ${addr}`;
 
                 try {

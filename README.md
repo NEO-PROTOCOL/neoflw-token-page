@@ -24,9 +24,8 @@
 
 ## 🔗 Links
 
-- **Website:** <https://neoflowoff.agency>
+- **Website:** <https://neoflw.vercel.app/>
 - **Twitter:** <https://x.com/neoflow_on_chain>
-- **GitHub:** <https://github.com/NEO-FlowOFF/neoflw-token>
 - **Basescan:** <https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b>
 - **Uniswap:** <https://app.uniswap.org/swap?outputCurrency=0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b>
 

@@ -20,6 +20,77 @@ import Footer from '../components/Footer.astro';
   <VerifySection />
   <Footer />
 
+  <!-- Wallet selector modal (mobile deep links) -->
+  <div id="wallet-modal" style="
+    display:none;position:fixed;inset:0;z-index:9999;
+    background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);
+    align-items:flex-end;justify-content:center;">
+    <div style="
+      background:#0a0a10;border:1px solid rgba(255,255,255,0.1);
+      border-radius:28px 28px 0 0;padding:2rem 1.5rem 2.5rem;
+      width:100%;max-width:480px;animation:slideUp 0.3s cubic-bezier(0.2,0.8,0.2,1);">
+      <div style="width:40px;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin:0 auto 1.5rem;"></div>
+      <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);margin-bottom:0.5rem;">Connect Wallet</div>
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:1.5rem;">Choose your wallet</div>
+      <div style="display:flex;flex-direction:column;gap:0.75rem;" id="wallet-options">
+        <!-- MetaMask -->
+        <button onclick="openWalletDeepLink('metamask')" style="
+          display:flex;align-items:center;gap:1rem;
+          background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+          border-radius:16px;padding:1rem 1.25rem;cursor:pointer;color:#fff;
+          font-family:inherit;font-size:0.95rem;font-weight:600;text-align:left;
+          transition:border-color 0.2s;">
+          <img src="https://raw.githubusercontent.com/MetaMask/brand-resources/master/SVG/SVG_MetaMask_Icon_Color.svg"
+               width="36" height="36" alt="MetaMask" style="border-radius:8px;flex-shrink:0;" />
+          <div>
+            <div>MetaMask</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.45);font-weight:400;">Opens MetaMask app</div>
+          </div>
+        </button>
+        <!-- Coinbase Wallet -->
+        <button onclick="openWalletDeepLink('coinbase')" style="
+          display:flex;align-items:center;gap:1rem;
+          background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+          border-radius:16px;padding:1rem 1.25rem;cursor:pointer;color:#fff;
+          font-family:inherit;font-size:0.95rem;font-weight:600;text-align:left;
+          transition:border-color 0.2s;">
+          <img src="https://www.coinbase.com/assets/press/coinbase-mark-white-icon.png"
+               width="36" height="36" alt="Coinbase Wallet" style="border-radius:8px;background:#1652f0;flex-shrink:0;padding:4px;" />
+          <div>
+            <div>Coinbase Wallet</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.45);font-weight:400;">Opens Coinbase Wallet app</div>
+          </div>
+        </button>
+        <!-- Rainbow -->
+        <button onclick="openWalletDeepLink('rainbow')" style="
+          display:flex;align-items:center;gap:1rem;
+          background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
+          border-radius:16px;padding:1rem 1.25rem;cursor:pointer;color:#fff;
+          font-family:inherit;font-size:0.95rem;font-weight:600;text-align:left;
+          transition:border-color 0.2s;">
+          <img src="https://rainbowme-res.cloudinary.com/image/upload/v1668070274/brand-assets/icon_s6hyya.png"
+               width="36" height="36" alt="Rainbow" style="border-radius:8px;flex-shrink:0;" />
+          <div>
+            <div>Rainbow</div>
+            <div style="font-size:0.7rem;color:rgba(255,255,255,0.45);font-weight:400;">Opens Rainbow app</div>
+          </div>
+        </button>
+      </div>
+      <button onclick="closeWalletModal()" style="
+        width:100%;margin-top:1rem;padding:0.875rem;border-radius:999px;
+        background:transparent;border:1px solid rgba(255,255,255,0.15);
+        color:rgba(255,255,255,0.6);font-family:inherit;font-size:0.875rem;
+        cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+  <style>
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+    #wallet-modal.open { display: flex !important; }
+  </style>
+
   <!-- ethers.js com SRI -->
   <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.1/ethers.umd.min.js"
           integrity="sha384-xeyyvbIlX+FahWHIZR6gjoC4A1i44cTBxZ330euRbtiXZwfcVDWVeOuJ4sGx8R2d"
@@ -28,6 +99,40 @@ import Footer from '../components/Footer.astro';
   <!-- Main script -->
   <script is:inline>
     const CONTRACT_ADDRESS = "0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b";
+    const SITE_URL = "neoflw.vercel.app";
+
+    // ── Mobile wallet helpers ────────────────────────────────
+    function isMobile() {
+        return /android|iphone|ipad|ipod|mobile/i.test(navigator.userAgent);
+    }
+
+    function openWalletModal() {
+        const modal = document.getElementById('wallet-modal');
+        if (modal) modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeWalletModal() {
+        const modal = document.getElementById('wallet-modal');
+        if (modal) modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('wallet-modal')?.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeWalletModal();
+    });
+
+    function openWalletDeepLink(wallet) {
+        closeWalletModal();
+        const encodedUrl = encodeURIComponent('https://' + SITE_URL);
+        const links = {
+            metamask: `https://metamask.app.link/dapp/${SITE_URL}`,
+            coinbase:  `https://go.cb-w.com/dapp?cb_url=${encodedUrl}`,
+            rainbow:   `https://rnbwapp.com/dapp?url=${encodedUrl}`,
+        };
+        window.location.href = links[wallet] || links.metamask;
+    }
     const ABI = [
         "function getContractInfo() external view returns (uint256 currentSupply, uint256 maxSupply, uint256 mintPrice, uint256 mintAmount, bool mintEnabled, address bridge)",
         "function publicMint() external payable",
@@ -188,13 +293,22 @@ import Footer from '../components/Footer.astro';
                 alert(msg);
             }
         } else {
-            alert("Please install Metamask or another web3 wallet.");
+            // No window.ethereum — show mobile wallet selector or desktop install prompt
+            if (isMobile()) {
+                openWalletModal();
+            } else {
+                alert("Please install MetaMask or another Web3 wallet extension.");
+            }
         }
     }
 
     async function doMint() {
         if (!window.ethereum) {
-            alert("Web3 wallet not found");
+            if (isMobile()) {
+                openWalletModal();
+            } else {
+                alert("Web3 wallet not found. Please install MetaMask.");
+            }
             return;
         }
 

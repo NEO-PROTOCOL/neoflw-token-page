@@ -3,6 +3,7 @@
 ## Step 1: Deploy to Vercel (5 min)
 
 ### Option A: CLI
+
 ```bash
 npm install -g vercel
 vercel login
@@ -10,7 +11,8 @@ vercel deploy --prod
 ```
 
 ### Option B: GitHub
-1. Create GitHub repo: `NEO-FlowOFF/neoflowoff-eth-limo`
+
+1. Create GitHub repo: `NEO-FlowOFF/neoflw-token-page`
 2. Push code: `git push origin main`
 3. Go to https://vercel.com
 4. Import GitHub repo
@@ -18,6 +20,7 @@ vercel deploy --prod
 6. Deploy
 
 ### Expected Output
+
 ```
 ✓ Production: https://neoflowoff.vercel.app
 ✓ Domain: neoflowoff.vercel.app
@@ -103,7 +106,7 @@ Use these URLs when submitting to listing platforms:
 ## 📊 Monitoring
 
 ### Vercel Analytics
-- https://vercel.com/[team]/neoflowoff-eth-limo/analytics
+- https://vercel.com/[team]/neoflw-token-page/analytics
 
 ### Check Status
 ```bash

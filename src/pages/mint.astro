@@ -187,8 +187,44 @@ const baseRpcUrl = (import.meta.env.PUBLIC_BASE_RPC_URL || "https://mainnet.base
     const statPrice = document.getElementById("stat-price");
     const statAmount = document.getElementById("stat-amount");
     const statSupply = document.getElementById("stat-supply");
+    const navConnectBtn = document.getElementById("connect-btn");
 
     let provider, signer, contract, userAddress;
+
+    function setNavConnectState(address) {
+      if (!navConnectBtn) return;
+      navConnectBtn.textContent = "";
+      const label = pt ? "Conectar Wallet" : "Connect Wallet";
+      if (!address) {
+        navConnectBtn.classList.remove("active");
+        navConnectBtn.append(document.createTextNode(label));
+        return;
+      }
+      const dot = document.createElement("span");
+      dot.className = "dot";
+      dot.style.background = "var(--green)";
+      const txt = document.createElement("span");
+      txt.className = "addr-txt";
+      txt.textContent = `${address.slice(0, 6)}...${address.slice(-4)}`;
+      navConnectBtn.classList.add("active");
+      navConnectBtn.append(dot, document.createTextNode(" "), txt);
+    }
+
+    async function toggleNavWallet() {
+      if (userAddress) {
+        userAddress = null;
+        signer = null;
+        contract = null;
+        provider = null;
+        setNavConnectState(null);
+        btn.onclick = connectWallet;
+        btnLabel.textContent = pt ? "Conectar Wallet" : "Connect Wallet";
+        btn.disabled = false;
+        log(pt ? "Wallet desconectada." : "Wallet disconnected.", "warn");
+        return;
+      }
+      await connectWallet();
+    }
 
     function log(text, type = "info") {
       const el = document.createElement("div");
@@ -244,6 +280,7 @@ const baseRpcUrl = (import.meta.env.PUBLIC_BASE_RPC_URL || "https://mainnet.base
         signer = await provider.getSigner();
         contract = new ethers.Contract(CONTRACT, ABI, signer);
         const hasMinted = await contract.hasPublicMinted(userAddress);
+        setNavConnectState(userAddress);
         if (hasMinted) {
           btnLabel.textContent = pt ? "Mint já realizado ✓" : "Already Minted ✓";
           btn.disabled = false;
@@ -287,6 +324,7 @@ const baseRpcUrl = (import.meta.env.PUBLIC_BASE_RPC_URL || "https://mainnet.base
     }
 
     btn.onclick = connectWallet;
+    navConnectBtn?.addEventListener("click", toggleNavWallet);
     loadContractData();
   </script>
 </Layout>

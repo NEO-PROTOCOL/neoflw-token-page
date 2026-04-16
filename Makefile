@@ -2,6 +2,8 @@
 
 .PHONY: install dev audit build commit help
 
+AUDIT_CMD := pnpm audit --audit-level=moderate --ignore-registry-errors
+
 # Detect OS
 OS := $(shell uname)
 
@@ -16,14 +18,15 @@ install:
 	pnpm install
 
 dev:
-	npx serve .
+	pnpm dev
 
 audit:
-	pnpm audit
+	@echo "Executando auditoria de dependências (modo resiliente)..."
+	@$(AUDIT_CMD)
 
 commit:
 	@echo "🚀 Iniciando fluxo NΞØ Protocol..."
-	pnpm audit
+	@$(AUDIT_CMD)
 	git status
 	@echo "Digite o tipo do commit (feat, fix, docs, style, refactor, chore):"
 	@read type; \

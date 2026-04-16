@@ -371,6 +371,9 @@ const i18n = {
     }
 
     async function init() {
+        // Attach UI listeners first so Connect Wallet always works even if RPC is slow or hangs.
+        setupEventListeners();
+
         // Default provider for read-only data (Base RPC)
         const baseRpc = baseRpcUrl;
         const readProvider = new ethers.JsonRpcProvider(baseRpc);
@@ -386,7 +389,6 @@ const i18n = {
         }
         await updateProofTrustSignals(readContract);
 
-        setupEventListeners();
         await tryAutoReconnect();
     }
 
@@ -755,6 +757,7 @@ const i18n = {
         if (!listenersBound) {
             document.getElementById('connect-btn')?.addEventListener('click', toggleWallet);
             document.getElementById('action-mint-btn')?.addEventListener('click', doMint);
+            document.querySelector('.chip-copy')?.addEventListener('click', copyAddr);
             listenersBound = true;
         }
 
@@ -781,7 +784,14 @@ const i18n = {
         })
     }
 
-    // Initialize on load
-    window.addEventListener('DOMContentLoaded', init);
+    // Initialize on load (handle late scripts: if DOM is already ready, run immediately)
+    function boot() {
+        void init();
+    }
+    if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', boot);
+    } else {
+        boot();
+    }
   </script>
 </Layout>

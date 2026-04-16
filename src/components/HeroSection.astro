@@ -46,7 +46,7 @@ const mintPath = pt ? '/pt-br/mint' : '/mint';
                             <span class="chip-label">{pt ? 'Contrato' : 'Contract'}</span>
                             <div style="background:rgba(3, 3, 5, 0.95);padding:4px 10px;border-radius:12px;border:1px solid var(--border-b);display:flex;align-items:center;gap:12px;flex:1;min-width:0;">
                                 <span class="chip-addr" id="addr" style="flex:1;min-width:0;color:var(--text-2);font-weight:700;">0x41F4ff3d45DED9C1332e4908F637B75fe83F5d6B</span>
-                                <button class="chip-copy" onclick="copyAddr()" style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
+                                <button type="button" class="chip-copy" style="display:flex;align-items:center;gap:4px;flex-shrink:0;">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:12px;height:12px;color:var(--pink-soft);"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                                     {pt ? 'copiar' : 'copy'}
                                 </button>

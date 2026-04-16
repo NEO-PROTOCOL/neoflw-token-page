@@ -8,13 +8,81 @@
  *   TURSO_AUTH_TOKEN    = eyJ...
  */
 
-const CORS = {
-  'Access-Control-Allow-Origin':  '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX_REQUESTS = 30;
+const TURSO_TIMEOUT_MS = 8_000;
+const MAX_BODY_BYTES = 2_048;
+const RATE_LIMIT_BUCKET = new Map();
+let schemaReadyPromise = null;
+
+function getClientIp(req) {
+  const fwd = req.headers.get('x-forwarded-for') ?? '';
+  const candidate = fwd.split(',')[0]?.trim();
+  return candidate || 'unknown';
+}
+
+function rateLimitExceeded(key) {
+  const now = Date.now();
+  const hit = RATE_LIMIT_BUCKET.get(key);
+  if (!hit || now - hit.windowStart > RATE_LIMIT_WINDOW_MS) {
+    RATE_LIMIT_BUCKET.set(key, { windowStart: now, count: 1 });
+    return false;
+  }
+  hit.count += 1;
+  return hit.count > RATE_LIMIT_MAX_REQUESTS;
+}
+
+function cleanRateLimitBucket() {
+  const now = Date.now();
+  for (const [key, value] of RATE_LIMIT_BUCKET.entries()) {
+    if (now - value.windowStart > RATE_LIMIT_WINDOW_MS * 2) {
+      RATE_LIMIT_BUCKET.delete(key);
+    }
+  }
+}
+
+function getCorsHeaders(origin) {
+  const allowed = new Set(
+    (process.env.TRACK_ALLOWED_ORIGINS ?? 'https://neoflw.vercel.app')
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean),
+  );
+  const safeOrigin = origin && allowed.has(origin) ? origin : 'https://neoflw.vercel.app';
+  return {
+    'Access-Control-Allow-Origin': safeOrigin,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    Vary: 'Origin',
+  };
+}
+
+function safePath(input) {
+  if (!input || typeof input !== 'string') return '/';
+  return input.startsWith('/') ? input.slice(0, 100) : '/';
+}
+
+function safeUrl(input) {
+  if (!input || typeof input !== 'string') return '';
+  try {
+    const url = new URL(input);
+    return `${url.protocol}//${url.host}${url.pathname}`.slice(0, 500);
+  } catch {
+    return '';
+  }
+}
+
+function makeTimeoutSignal(ms) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), ms);
+  return { controller, timeoutId };
+}
 
 export default async function handler(req) {
+  const origin = req.headers.get('origin');
+  const CORS = getCorsHeaders(origin);
+  cleanRateLimitBucket();
+
   // ── Preflight ────────────────────────────────────────────────────────
   if (req.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers: CORS });
@@ -23,7 +91,17 @@ export default async function handler(req) {
     return Response.json({ error: 'Method not allowed' }, { status: 405, headers: CORS });
   }
 
+  const clientIp = getClientIp(req);
+  if (rateLimitExceeded(clientIp)) {
+    return Response.json({ error: 'Too many requests' }, { status: 429, headers: CORS });
+  }
+
   // ── Input ────────────────────────────────────────────────────────────
+  const contentLength = Number(req.headers.get('content-length') ?? '0');
+  if (contentLength > MAX_BODY_BYTES) {
+    return Response.json({ error: 'Payload too large' }, { status: 413, headers: CORS });
+  }
+
   let body;
   try {
     body = await req.json();
@@ -51,8 +129,8 @@ export default async function handler(req) {
 
   // ── Sanitização ───────────────────────────────────────────────────────
   const addr  = address.toLowerCase();
-  const pg    = (page     || '/').slice(0, 100);
-  const ref   = (referrer || '').slice(0, 500);
+  const pg    = safePath(page);
+  const ref   = safeUrl(referrer);
   const ua    = (req.headers.get('user-agent') || '').slice(0, 250);
   const chain = (chainId  || '0x2105').slice(0, 20);
 
@@ -60,9 +138,8 @@ export default async function handler(req) {
   const txt = (v) => ({ type: 'text', value: String(v ?? '') });
 
   // ── Pipeline Turso ────────────────────────────────────────────────────
-  const pipeline = {
+  const createSchemaPipeline = {
     requests: [
-      // 1. Cria tabela se não existir
       {
         type: 'execute',
         stmt: {
@@ -79,7 +156,12 @@ export default async function handler(req) {
           args: [],
         },
       },
-      // 2. Upsert — novo registro ou atualiza last_seen + visitas
+      { type: 'close' },
+    ],
+  };
+
+  const upsertPipeline = {
+    requests: [
       {
         type: 'execute',
         stmt: {
@@ -101,13 +183,45 @@ export default async function handler(req) {
 
   // ── Chamada HTTP ──────────────────────────────────────────────────────
   try {
+    if (!schemaReadyPromise) {
+      schemaReadyPromise = (async () => {
+        const { controller, timeoutId } = makeTimeoutSignal(TURSO_TIMEOUT_MS);
+        try {
+          const schemaRes = await fetch(`${dbUrl}/v2/pipeline`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(createSchemaPipeline),
+            signal: controller.signal,
+          });
+          if (!schemaRes.ok) {
+            const errText = await schemaRes.text();
+            throw new Error(`Schema pipeline failed (${schemaRes.status}): ${errText}`);
+          }
+        } finally {
+          clearTimeout(timeoutId);
+        }
+      })().catch((error) => {
+        schemaReadyPromise = null;
+        throw error;
+      });
+    }
+
+    await schemaReadyPromise;
+
+    const { controller, timeoutId } = makeTimeoutSignal(TURSO_TIMEOUT_MS);
     const r = await fetch(`${dbUrl}/v2/pipeline`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(pipeline),
+      body: JSON.stringify(upsertPipeline),
+      signal: controller.signal,
+    }).finally(() => {
+      clearTimeout(timeoutId);
     });
 
     if (!r.ok) {
@@ -118,7 +232,8 @@ export default async function handler(req) {
 
     return Response.json({ ok: true }, { status: 200, headers: CORS });
   } catch (e) {
-    console.error('[track] Fetch failed:', e.message);
+    const msg = e?.name === 'AbortError' ? 'Turso request timeout' : e.message;
+    console.error('[track] Fetch failed:', msg);
     return Response.json({ error: 'Internal error' }, { status: 500, headers: CORS });
   }
 }

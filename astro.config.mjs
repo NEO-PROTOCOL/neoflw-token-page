@@ -1,9 +1,31 @@
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
 
-// https://astro.build/config
 export default defineConfig({
   output: 'static',
   build: {
-    format: 'file'
-  }
+    format: 'file',
+  },
+  integrations: [
+    react({
+      include: ['**/components/web3/**', '**/web3/**'],
+    }),
+  ],
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@coinbase/onchainkit',
+        '@coinbase/onchainkit/wallet',
+        '@coinbase/onchainkit/identity',
+        '@coinbase/onchainkit/transaction',
+        'wagmi',
+        'viem',
+        '@tanstack/react-query',
+        'eventemitter3',
+      ],
+    },
+    ssr: {
+      noExternal: ['@coinbase/onchainkit'],
+    },
+  },
 });

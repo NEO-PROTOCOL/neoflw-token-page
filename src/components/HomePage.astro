@@ -125,8 +125,9 @@ const i18n = {
           border-radius:16px;padding:1rem 1.25rem;cursor:pointer;color:#fff;
           font-family:inherit;font-size:0.95rem;font-weight:600;text-align:left;
           transition:border-color 0.2s;">
-          <img src="https://rainbowme-res.cloudinary.com/image/upload/v1668070274/brand-assets/icon_s6hyya.png"
-               width="36" height="36" alt="Rainbow" style="border-radius:8px;flex-shrink:0;" />
+          <img src="https://rainbow.me/favicon-192.png"
+               width="36" height="36" alt="Rainbow" loading="lazy"
+               referrerpolicy="no-referrer" style="border-radius:8px;flex-shrink:0;" />
           <div>
             <div>Rainbow</div>
             <div style="font-size:0.7rem;color:rgba(255,255,255,0.45);font-weight:400;">{i18n.opensRainbow}</div>
@@ -154,7 +155,7 @@ const i18n = {
           crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <!-- Main script -->
-  <script define:vars={{ i18n, numberLocale, baseRpcUrl }} is:inline>
+  <script define:vars={{ i18n, numberLocale, baseRpcUrl, pt }} is:inline>
     const CONTRACT_ADDRESS = "0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b";
     const SITE_URL = "neoflw.vercel.app";
 

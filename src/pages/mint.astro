@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
+import MintCard from '../components/web3/MintCard.tsx';
 
 interface Props {
   locale?: 'en' | 'pt-BR';
@@ -8,15 +9,11 @@ interface Props {
 
 const { locale = 'en' } = Astro.props;
 const pt = locale === 'pt-BR';
-const CONTRACT = "0x41F4ff3d45DED9C1332e4908F637B75fe83F5d6B";
-const CHAIN_ID = "0x2105";
-const ETHERS_SRI = "sha384-xeyyvbIlX+FahWHIZR6gjoC4A1i44cTBxZ330euRbtiXZwfcVDWVeOuJ4sGx8R2d";
-const baseRpcUrl = (import.meta.env.PUBLIC_BASE_RPC_URL || "https://mainnet.base.org").trim() || "https://mainnet.base.org";
 ---
 
 <Layout
   title={pt ? 'Mint $NEOFLW — NEØ FlowOFF' : 'MINT $NEOFLW — NEØ FlowOFF'}
-  description={pt ? 'Mint oficial do token NEOFLW na Base Mainnet.' : 'Official NEOFLW mint on Base Mainnet.'}
+  description={pt ? 'Mint oficial do token $NEOFLW na Base Mainnet.' : 'Official $NEOFLW mint on Base Mainnet.'}
   lang={pt ? 'pt-BR' : 'en'}
   ogLocale={pt ? 'pt_BR' : 'en_US'}
   canonicalPath={pt ? '/pt-br/mint' : '/mint'}
@@ -35,42 +32,7 @@ const baseRpcUrl = (import.meta.env.PUBLIC_BASE_RPC_URL || "https://mainnet.base
               : 'Same visual and technical stack from homepage: NEØ FlowOFF identity, Base Mainnet, and verified contract.'}
           </p>
 
-          <div class="mint-grid">
-            <div class="mint-stat">
-              <span class="stat-label">{pt ? 'Rede' : 'Network'}</span>
-              <span class="stat-value">Base Mainnet</span>
-            </div>
-            <div class="mint-stat">
-              <span class="stat-label">{pt ? 'Preço' : 'Mint Price'}</span>
-              <span class="stat-value pink" id="stat-price">0.003 ETH</span>
-            </div>
-            <div class="mint-stat">
-              <span class="stat-label">{pt ? 'Você recebe' : 'You Receive'}</span>
-              <span class="stat-value" id="stat-amount">1,000 $NEOFLW</span>
-            </div>
-            <div class="mint-stat">
-              <span class="stat-label">{pt ? 'Mintado' : 'Minted'}</span>
-              <span class="stat-value" id="stat-supply">—</span>
-            </div>
-          </div>
-
-          <div class="mint-log" id="terminal">
-            <div class="mint-log-header">
-              <span>Base Node</span>
-              <span class="status-dot"></span>
-            </div>
-            <div id="logs"></div>
-          </div>
-
-          <div class="error-banner" id="error-banner"></div>
-
-          <button class="mint-btn" id="action-btn">
-            <span id="btn-label">{pt ? 'Conectar Wallet' : 'Connect Wallet'}</span>
-          </button>
-
-          <a class="tx-link" id="tx-link" target="_blank" rel="noopener">
-            {pt ? 'Ver transação na Basescan ↗' : 'View transaction on Basescan ↗'}
-          </a>
+          <MintCard client:only="react" pt={pt} />
         </div>
       </div>
     </div>
@@ -108,41 +70,13 @@ const baseRpcUrl = (import.meta.env.PUBLIC_BASE_RPC_URL || "https://mainnet.base
       flex-direction: column;
       gap: 0.22rem;
     }
-    .mint-log {
+    .mint-action-slot {
       margin-top: var(--fib3);
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1rem;
-      min-height: 120px;
-      max-height: 180px;
-      overflow-y: auto;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-    }
-    .mint-log-header {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-3);
-      margin-bottom: 0.6rem;
-      font-size: 0.62rem;
+      flex-direction: column;
+      gap: 0.6rem;
     }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 10px var(--green);
-      display: inline-block;
-    }
-    .log-entry { margin-bottom: 6px; color: var(--text-2); }
-    .log-entry.warn { color: var(--pink-soft); }
-    .log-entry.cmd  { color: var(--green); }
     .mint-btn {
-      margin-top: var(--fib3);
       width: 100%;
       border: none;
       border-radius: 999px;
@@ -154,177 +88,9 @@ const baseRpcUrl = (import.meta.env.PUBLIC_BASE_RPC_URL || "https://mainnet.base
       transition: transform 0.2s ease, filter 0.2s ease;
     }
     .mint-btn:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.04); }
-    .mint-btn:disabled { cursor: wait; opacity: 0.75; }
-    .tx-link {
-      display: none;
-      margin-top: 0.8rem;
-      color: var(--blue);
-      text-decoration: none;
-      font-size: 0.74rem;
-    }
+    .mint-btn:disabled { cursor: not-allowed; opacity: 0.55; }
     @media (max-width: 700px) {
       .mint-grid { grid-template-columns: 1fr; }
     }
   </style>
-
-  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.1/ethers.umd.min.js"
-      integrity={ETHERS_SRI} crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <script define:vars={{ CONTRACT, CHAIN_ID, baseRpcUrl, pt }} is:inline>
-    const ABI = [
-      "function getContractInfo() external view returns (uint256 currentSupply, uint256 maxSupply, uint256 mintPrice, uint256 mintAmount, bool mintEnabled, address bridge)",
-      "function publicMint() external payable",
-      "function hasPublicMinted(address) external view returns (bool)",
-    ];
-    const BASESCAN = "https://basescan.org";
-    const MAX_SUPPLY = 1_000_000_000;
-
-    const btn = document.getElementById("action-btn");
-    const btnLabel = document.getElementById("btn-label");
-    const logsEl = document.getElementById("logs");
-    const errorBanner = document.getElementById("error-banner");
-    const txLink = document.getElementById("tx-link");
-    const statPrice = document.getElementById("stat-price");
-    const statAmount = document.getElementById("stat-amount");
-    const statSupply = document.getElementById("stat-supply");
-    const navConnectBtn = document.getElementById("connect-btn");
-
-    let provider, signer, contract, userAddress;
-
-    function setNavConnectState(address) {
-      if (!navConnectBtn) return;
-      navConnectBtn.textContent = "";
-      const label = pt ? "Conectar Wallet" : "Connect Wallet";
-      if (!address) {
-        navConnectBtn.classList.remove("active");
-        navConnectBtn.append(document.createTextNode(label));
-        return;
-      }
-      const dot = document.createElement("span");
-      dot.className = "dot";
-      dot.style.background = "var(--green)";
-      const txt = document.createElement("span");
-      txt.className = "addr-txt";
-      txt.textContent = `${address.slice(0, 6)}...${address.slice(-4)}`;
-      navConnectBtn.classList.add("active");
-      navConnectBtn.append(dot, document.createTextNode(" "), txt);
-    }
-
-    async function toggleNavWallet() {
-      if (userAddress) {
-        userAddress = null;
-        signer = null;
-        contract = null;
-        provider = null;
-        setNavConnectState(null);
-        btn.onclick = connectWallet;
-        btnLabel.textContent = pt ? "Conectar Wallet" : "Connect Wallet";
-        btn.disabled = false;
-        log(pt ? "Wallet desconectada." : "Wallet disconnected.", "warn");
-        return;
-      }
-      await connectWallet();
-    }
-
-    function log(text, type = "info") {
-      const el = document.createElement("div");
-      el.className = `log-entry ${type}`;
-      el.textContent = `> ${text}`;
-      logsEl.appendChild(el);
-    }
-    function showError(msg) {
-      errorBanner.textContent = msg;
-      errorBanner.style.display = "block";
-    }
-    function clearError() {
-      errorBanner.style.display = "none";
-      errorBanner.textContent = "";
-    }
-
-    async function loadContractData() {
-      try {
-        const rp = new ethers.JsonRpcProvider(baseRpcUrl);
-        const rc = new ethers.Contract(CONTRACT, ABI, rp);
-        const info = await rc.getContractInfo();
-        const supply = Number(ethers.formatEther(info.currentSupply));
-        const price = ethers.formatEther(info.mintPrice);
-        const amount = Number(ethers.formatEther(info.mintAmount));
-        statSupply.textContent = `${supply.toLocaleString()} / ${MAX_SUPPLY.toLocaleString()}`;
-        statPrice.textContent = `${price} ETH`;
-        statAmount.textContent = `${amount.toLocaleString()} $NEOFLW`;
-      } catch (err) {
-        log(pt ? "Falha ao ler dados on-chain." : "Failed to load on-chain data.", "warn");
-      }
-    }
-
-    async function ensureBaseNetwork() {
-      const chainId = await window.ethereum.request({ method: "eth_chainId" });
-      if (chainId === CHAIN_ID) return;
-      await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: CHAIN_ID }] });
-    }
-
-    async function connectWallet() {
-      clearError();
-      if (!window.ethereum) {
-        showError(pt ? "Wallet não detectada." : "Wallet not detected.");
-        return;
-      }
-
-      btn.disabled = true;
-      btnLabel.textContent = pt ? "Conectando..." : "Connecting...";
-      try {
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        userAddress = accounts[0];
-        await ensureBaseNetwork();
-        provider = new ethers.BrowserProvider(window.ethereum);
-        signer = await provider.getSigner();
-        contract = new ethers.Contract(CONTRACT, ABI, signer);
-        const hasMinted = await contract.hasPublicMinted(userAddress);
-        setNavConnectState(userAddress);
-        if (hasMinted) {
-          btnLabel.textContent = pt ? "Mint já realizado ✓" : "Already Minted ✓";
-          btn.disabled = false;
-          return;
-        }
-        btnLabel.textContent = pt ? "Mint $NEOFLW" : "Mint $NEOFLW";
-        btn.disabled = false;
-        btn.onclick = doMint;
-        log(pt ? "Wallet conectada." : "Wallet connected.", "cmd");
-      } catch (e) {
-        btnLabel.textContent = pt ? "Conectar Wallet" : "Connect Wallet";
-        btn.disabled = false;
-        log(pt ? "Conexão cancelada." : "Connection cancelled.", "warn");
-      }
-    }
-
-    async function doMint() {
-      clearError();
-      btn.disabled = true;
-      btnLabel.textContent = pt ? "Preparando..." : "Preparing...";
-      try {
-        await ensureBaseNetwork();
-        const rp = new ethers.JsonRpcProvider(baseRpcUrl);
-        const rc = new ethers.Contract(CONTRACT, ABI, rp);
-        const info = await rc.getContractInfo();
-        const price = info.mintPrice;
-        const tx = await contract.publicMint({ value: price });
-        btnLabel.textContent = pt ? "Confirmando..." : "Confirming...";
-        await tx.wait();
-        btnLabel.textContent = pt ? "Mint concluído ✓" : "Minted ✓";
-        txLink.href = `${BASESCAN}/tx/${tx.hash}`;
-        txLink.style.display = "inline-block";
-        btn.disabled = false;
-        await loadContractData();
-      } catch (e) {
-        btn.disabled = false;
-        btnLabel.textContent = pt ? "Tentar novamente" : "Retry Mint";
-        btn.onclick = doMint;
-        showError(e?.message || (pt ? "Falha no mint." : "Mint failed."));
-      }
-    }
-
-    btn.onclick = connectWallet;
-    navConnectBtn?.addEventListener("click", toggleNavWallet);
-    loadContractData();
-  </script>
 </Layout>

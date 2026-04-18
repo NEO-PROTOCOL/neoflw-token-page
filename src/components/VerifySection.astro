@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import frameContrato from '../assets/frame-contrato.png';
+
 interface Props {
     locale?: 'en' | 'pt-BR';
 }
@@ -23,46 +26,516 @@ const pt = locale === 'pt-BR';
                     <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:10px;height:10px;"><polyline points="20 6 9 17 4 12"/></svg></span> {pt ? 'Ownable2Step sem ponto único de falha' : 'Ownable2Step no single point of failure'}</li>
                     <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:10px;height:10px;"><polyline points="20 6 9 17 4 12"/></svg></span> {pt ? 'EIP-2612 Permit auditado pela comunidade' : 'EIP-2612 Permit audited by community'}</li>
                 </ul>
-                <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b" class="btn-fill"
-                    target="_blank" rel="noopener">{pt ? 'Ver Contrato na Basescan ↗' : 'View Contract on Basescan ↗'}</a>
+                <button type="button" class="btn-fill" data-open-contract-modal
+                    aria-haspopup="dialog" aria-controls="contract-modal">
+                    {pt ? 'Ver Contrato' : 'View Contract'}
+                </button>
             </div>
             <div class="verify-right">
                 <div class="code-header">
                     <div class="dot dot-r"></div>
                     <div class="dot dot-y"></div>
                     <div class="dot dot-g"></div>
-                    <span style="margin-left:0.5rem;font-size:0.7rem;color:var(--text-3);">NeoFlwToken.sol</span>
+                    <span style="margin-left:0.5rem;font-size:0.7rem;color:var(--text-3);">NeoFlwToken.sol · 3D Graph</span>
                 </div>
-                <div class="code-body">
-                    <span class="code-line"><span class="c-cmt">// SPDX-License-Identifier: MIT</span></span>
-                    <span class="code-line"><span class="c-key">pragma</span> solidity ^0.8.20;</span>
-                    <span class="code-line">&nbsp;</span>
-                    <span class="code-line"><span class="c-key">import</span> <span
-                            class="c-str">"@openzeppelin/ERC20"</span>;</span>
-                    <span class="code-line"><span class="c-key">import</span> <span
-                            class="c-str">"@openzeppelin/ERC20Burnable"</span>;</span>
-                    <span class="code-line"><span class="c-key">import</span> <span
-                            class="c-str">"@openzeppelin/ERC20Permit"</span>;</span>
-                    <span class="code-line"><span class="c-key">import</span> <span
-                            class="c-str">"@openzeppelin/Ownable2Step"</span>;</span>
-                    <span class="code-line">&nbsp;</span>
-                    <span class="code-line"><span class="c-key">contract</span> <span
-                            class="c-pnk">NeoFlwToken</span> <span class="c-key">is</span></span>
-                    <span class="code-line">&nbsp;&nbsp;<span class="c-val">ERC20</span>, <span
-                            class="c-val">ERC20Burnable</span>,</span>
-                    <span class="code-line">&nbsp;&nbsp;<span class="c-val">ERC20Permit</span>, <span
-                            class="c-val">Ownable2Step</span></span>
-                    <span class="code-line">{</span>
-                    <span class="code-line">&nbsp;&nbsp;<span class="c-key">uint256 public constant</span></span>
-                    <span class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">MAX_SUPPLY</span> = <span
-                            class="c-val">1_000_000_000e18</span>;</span>
-                    <span class="code-line">&nbsp;</span>
-                    <span class="code-line">&nbsp;&nbsp;<span class="c-cmt">// Base Mainnet · Chain
-                            8453</span></span>
-                    <span class="code-line">&nbsp;&nbsp;<span class="c-cmt">// 0x41F4ff3d45DED9C1332e4908F637B75fe83F5d6B</span></span>
-                    <span class="code-line">}</span>
+                <div class="graph-body">
+                    <div id="contract-graph-3d" class="contract-graph-3d"
+                        role="img"
+                        aria-label={pt ? 'Grafo 3D do contrato NeoFlwToken' : 'NeoFlwToken contract 3D graph'}>
+                        <div class="graph-loading" data-graph-loading>
+                            <span class="graph-spinner" aria-hidden="true"></span>
+                            <span>{pt ? 'Carregando grafo…' : 'Loading graph…'}</span>
+                        </div>
+                    </div>
+                    <div class="graph-legend" aria-hidden="true">
+                        <span><i style="background:#ff0080"></i>{pt ? 'Contrato' : 'Contract'}</span>
+                        <span><i style="background:#80b5ff"></i>{pt ? 'Herança' : 'Inheritance'}</span>
+                        <span><i style="background:#00ff88"></i>{pt ? 'Função' : 'Function'}</span>
+                        <span><i style="background:#ffaa00"></i>{pt ? 'Estado' : 'State'}</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <dialog id="contract-modal" class="contract-modal" aria-labelledby="contract-modal-title">
+        <div class="contract-modal-inner">
+            <header class="contract-modal-head">
+                <div>
+                    <div class="contract-modal-eyebrow">{pt ? 'Contrato NEOFLW' : 'NEOFLW Contract'}</div>
+                    <h3 id="contract-modal-title" class="contract-modal-title">
+                        {pt ? 'Frame do contrato' : 'Contract frame'}
+                    </h3>
+                </div>
+                <button type="button" class="contract-modal-close" data-close-contract-modal
+                    aria-label={pt ? 'Fechar' : 'Close'}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                        stroke-linecap="round" aria-hidden="true">
+                        <path d="M6 6 L18 18 M18 6 L6 18" />
+                    </svg>
+                </button>
+            </header>
+            <div class="contract-modal-body">
+                <Image src={frameContrato} alt={pt ? 'Frame do contrato NEOFLW' : 'NEOFLW contract frame'}
+                    widths={[480, 768, 1024, 1280]}
+                    sizes="(max-width: 720px) 92vw, min(960px, 86vw)"
+                    quality={88} loading="eager" class="contract-modal-img" />
+            </div>
+            <footer class="contract-modal-foot">
+                <a href="https://basescan.org/token/0x41f4ff3d45ded9c1332e4908f637b75fe83f5d6b"
+                    target="_blank" rel="noopener" class="contract-modal-link">
+                    {pt ? 'Abrir na Basescan ↗' : 'Open on Basescan ↗'}
+                </a>
+            </footer>
+        </div>
+    </dialog>
 </section>
+
+<style>
+    /* ─── 3D contract graph ─── */
+    .graph-body {
+        position: relative;
+        background:
+            radial-gradient(ellipse at 30% 20%, rgba(255, 0, 128, 0.07), transparent 55%),
+            radial-gradient(ellipse at 70% 80%, rgba(0, 255, 136, 0.05), transparent 55%),
+            #050507;
+        overflow: hidden;
+    }
+
+    .contract-graph-3d {
+        width: 100%;
+        height: 420px;
+        min-height: 320px;
+        position: relative;
+        cursor: grab;
+    }
+
+    .contract-graph-3d:active {
+        cursor: grabbing;
+    }
+
+    .contract-graph-3d canvas {
+        display: block;
+    }
+
+    .graph-loading {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--text-3);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .graph-loading.is-hidden {
+        opacity: 0;
+    }
+
+    .graph-spinner {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.08);
+        border-top-color: rgba(255, 0, 128, 0.85);
+        animation: graphSpin 0.9s linear infinite;
+    }
+
+    @keyframes graphSpin {
+        to { transform: rotate(360deg); }
+    }
+
+    .graph-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem 1.1rem;
+        padding: 0.65rem 0.9rem 0.85rem;
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        color: var(--text-2);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(0, 0, 0, 0.4);
+    }
+
+    .graph-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        letter-spacing: 0.04em;
+    }
+
+    .graph-legend i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 8px currentColor;
+    }
+
+    @media (max-width: 720px) {
+        .contract-graph-3d {
+            height: 340px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .graph-spinner { animation: none; }
+    }
+
+    .contract-modal {
+        padding: 0;
+        border: none;
+        background: transparent;
+        max-width: min(960px, 92vw);
+        max-height: 92vh;
+        width: 100%;
+        color: inherit;
+        overflow: visible;
+    }
+
+    .contract-modal::backdrop {
+        background: rgba(3, 3, 6, 0.72);
+        backdrop-filter: blur(14px) saturate(160%);
+        -webkit-backdrop-filter: blur(14px) saturate(160%);
+        animation: contractBackdropIn 0.22s ease-out;
+    }
+
+    .contract-modal[open] {
+        animation: contractModalIn 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    @keyframes contractBackdropIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes contractModalIn {
+        from { opacity: 0; transform: translateY(12px) scale(0.98); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .contract-modal-inner {
+        background: linear-gradient(180deg, rgba(14, 14, 20, 0.96), rgba(8, 8, 12, 0.96));
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 22px;
+        box-shadow: 0 28px 80px -24px rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        max-height: 92vh;
+        overflow: hidden;
+    }
+
+    .contract-modal-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.1rem 1.25rem 0.75rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .contract-modal-eyebrow {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: rgba(255, 255, 255, 0.45);
+        margin-bottom: 0.25rem;
+    }
+
+    .contract-modal-title {
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0;
+        color: #fff;
+        letter-spacing: -0.01em;
+    }
+
+    .contract-modal-close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background 0.18s, border-color 0.18s, transform 0.15s;
+    }
+
+    .contract-modal-close:hover {
+        background: rgba(255, 77, 77, 0.18);
+        border-color: rgba(255, 77, 77, 0.45);
+        transform: rotate(90deg);
+    }
+
+    .contract-modal-close svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .contract-modal-body {
+        padding: 1rem 1.25rem;
+        overflow: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(ellipse at top, rgba(255, 0, 128, 0.06), transparent 60%);
+    }
+
+    .contract-modal-img {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        border-radius: 12px;
+        display: block;
+        object-fit: contain;
+    }
+
+    .contract-modal-foot {
+        padding: 0.85rem 1.25rem 1.1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .contract-modal-link {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.65);
+        text-decoration: none;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: color 0.18s, border-color 0.18s, background 0.18s;
+    }
+
+    .contract-modal-link:hover {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    @media (max-width: 600px) {
+        .contract-modal {
+            max-width: 100vw;
+            max-height: 100vh;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        .contract-modal-inner {
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+            max-height: 100vh;
+            min-height: 100vh;
+        }
+
+        .contract-modal-head {
+            padding: 1rem 1rem 0.65rem;
+        }
+
+        .contract-modal-body {
+            padding: 0.75rem 1rem;
+        }
+
+        .contract-modal-foot {
+            padding: 0.75rem 1rem 1rem;
+        }
+    }
+
+    body.contract-modal-open {
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    // ── 3D contract graph (lazy-loaded on intersect) ──
+    const graphContainer = document.getElementById('contract-graph-3d');
+    if (graphContainer) {
+        type GraphNode = {
+            id: string;
+            label: string;
+            kind: 'contract' | 'parent' | 'function' | 'state';
+            color: string;
+            size: number;
+        };
+        type GraphLink = { source: string; target: string; color: string };
+
+        const nodes: GraphNode[] = [
+            { id: 'NeoFlwToken', label: 'NeoFlwToken', kind: 'contract', color: '#ff0080', size: 14 },
+            { id: 'ERC20', label: 'ERC20', kind: 'parent', color: '#80b5ff', size: 9 },
+            { id: 'ERC20Burnable', label: 'ERC20Burnable', kind: 'parent', color: '#80b5ff', size: 9 },
+            { id: 'ERC20Permit', label: 'ERC20Permit', kind: 'parent', color: '#80b5ff', size: 9 },
+            { id: 'Ownable2Step', label: 'Ownable2Step', kind: 'parent', color: '#80b5ff', size: 9 },
+            { id: 'publicMint', label: 'publicMint() payable', kind: 'function', color: '#00ff88', size: 7 },
+            { id: 'hasPublicMinted', label: 'hasPublicMinted(addr)', kind: 'function', color: '#00ff88', size: 6 },
+            { id: 'getContractInfo', label: 'getContractInfo()', kind: 'function', color: '#00ff88', size: 6 },
+            { id: 'publicMintEnabled', label: 'publicMintEnabled()', kind: 'function', color: '#00ff88', size: 6 },
+            { id: 'owner', label: 'owner()', kind: 'function', color: '#00ff88', size: 6 },
+            { id: 'totalSupply', label: 'totalSupply()', kind: 'function', color: '#00ff88', size: 6 },
+            { id: 'MAX_SUPPLY', label: 'MAX_SUPPLY = 1B e18', kind: 'state', color: '#ffaa00', size: 6 },
+            { id: 'PROTOCOL_FEE_BPS', label: 'PROTOCOL_FEE_BPS', kind: 'state', color: '#ffaa00', size: 5 },
+            { id: 'PROTOCOL_TREASURY', label: 'PROTOCOL_TREASURY', kind: 'state', color: '#ffaa00', size: 5 },
+            { id: 'bridgeMinter', label: 'bridgeMinter', kind: 'state', color: '#ffaa00', size: 5 },
+        ];
+
+        const inheritColor = 'rgba(128,181,255,0.55)';
+        const fnColor = 'rgba(0,255,136,0.45)';
+        const stateColor = 'rgba(255,170,0,0.45)';
+
+        const links: GraphLink[] = [
+            { source: 'NeoFlwToken', target: 'ERC20', color: inheritColor },
+            { source: 'NeoFlwToken', target: 'ERC20Burnable', color: inheritColor },
+            { source: 'NeoFlwToken', target: 'ERC20Permit', color: inheritColor },
+            { source: 'NeoFlwToken', target: 'Ownable2Step', color: inheritColor },
+            { source: 'NeoFlwToken', target: 'publicMint', color: fnColor },
+            { source: 'NeoFlwToken', target: 'hasPublicMinted', color: fnColor },
+            { source: 'NeoFlwToken', target: 'getContractInfo', color: fnColor },
+            { source: 'NeoFlwToken', target: 'publicMintEnabled', color: fnColor },
+            { source: 'NeoFlwToken', target: 'owner', color: fnColor },
+            { source: 'NeoFlwToken', target: 'totalSupply', color: fnColor },
+            { source: 'NeoFlwToken', target: 'MAX_SUPPLY', color: stateColor },
+            { source: 'NeoFlwToken', target: 'PROTOCOL_FEE_BPS', color: stateColor },
+            { source: 'NeoFlwToken', target: 'PROTOCOL_TREASURY', color: stateColor },
+            { source: 'NeoFlwToken', target: 'bridgeMinter', color: stateColor },
+        ];
+
+        let graphInstance: any = null;
+        let resizeObserver: ResizeObserver | null = null;
+
+        const initGraph = async () => {
+            if (graphInstance) return;
+            try {
+                const { default: ForceGraph3D } = await import('3d-force-graph');
+                const THREE = await import('three');
+
+                const loadingEl = graphContainer.querySelector<HTMLElement>('[data-graph-loading]');
+                const width = graphContainer.clientWidth;
+                const height = graphContainer.clientHeight;
+
+                graphInstance = (ForceGraph3D as any)()(graphContainer)
+                    .backgroundColor('rgba(0,0,0,0)')
+                    .width(width)
+                    .height(height)
+                    .graphData({ nodes, links })
+                    .nodeLabel((node: any) => `<span style="font-family:monospace;background:rgba(0,0,0,.85);padding:4px 8px;border-radius:6px;color:#fff;border:1px solid ${node.color};">${node.label}</span>`)
+                    .nodeRelSize(4)
+                    .nodeVal((node: any) => node.size)
+                    .nodeColor((node: any) => node.color)
+                    .nodeOpacity(0.95)
+                    .nodeResolution(16)
+                    .linkColor((link: any) => link.color)
+                    .linkWidth(0.6)
+                    .linkOpacity(0.65)
+                    .linkDirectionalParticles(2)
+                    .linkDirectionalParticleSpeed(0.006)
+                    .linkDirectionalParticleWidth(1.5)
+                    .linkDirectionalParticleColor((link: any) => link.color)
+                    .enableNodeDrag(true)
+                    .showNavInfo(false)
+                    .cooldownTicks(180)
+                    .onNodeClick((node: any) => {
+                        const distance = 120;
+                        const distRatio = 1 + distance / Math.hypot(node.x || 1, node.y || 1, node.z || 1);
+                        graphInstance.cameraPosition(
+                            { x: (node.x || 0) * distRatio, y: (node.y || 0) * distRatio, z: (node.z || 0) * distRatio },
+                            node,
+                            900,
+                        );
+                    });
+
+                graphInstance.d3Force('charge')?.strength(-180);
+                graphInstance.d3Force('link')?.distance(55);
+
+                const scene = graphInstance.scene();
+                scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+                const pink = new THREE.PointLight(0xff0080, 1.4, 800);
+                pink.position.set(80, 60, 120);
+                scene.add(pink);
+                const cyan = new THREE.PointLight(0x80b5ff, 1.0, 800);
+                cyan.position.set(-100, -40, -80);
+                scene.add(cyan);
+
+                const controls = graphInstance.controls();
+                if (controls) {
+                    controls.autoRotate = true;
+                    controls.autoRotateSpeed = 0.6;
+                    controls.enableDamping = true;
+                    controls.dampingFactor = 0.08;
+                    graphContainer.addEventListener('pointerdown', () => { controls.autoRotate = false; });
+                }
+
+                if (loadingEl) {
+                    loadingEl.classList.add('is-hidden');
+                    setTimeout(() => loadingEl.remove(), 350);
+                }
+
+                resizeObserver = new ResizeObserver(() => {
+                    if (!graphInstance) return;
+                    graphInstance.width(graphContainer.clientWidth).height(graphContainer.clientHeight);
+                });
+                resizeObserver.observe(graphContainer);
+            } catch (err) {
+                console.error('Failed to load 3D contract graph:', err);
+                const loadingEl = graphContainer.querySelector<HTMLElement>('[data-graph-loading]');
+                if (loadingEl) loadingEl.textContent = 'Graph unavailable';
+            }
+        };
+
+        const io = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting) {
+                    void initGraph();
+                    io.disconnect();
+                    break;
+                }
+            }
+        }, { rootMargin: '200px' });
+        io.observe(graphContainer);
+    }
+
+    // ── Contract image modal ──
+    const dialog = document.getElementById('contract-modal') as HTMLDialogElement | null;
+    if (dialog) {
+        document.querySelectorAll<HTMLButtonElement>('[data-open-contract-modal]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                dialog.showModal();
+                document.body.classList.add('contract-modal-open');
+            });
+        });
+
+        const close = () => {
+            if (dialog.open) dialog.close();
+            document.body.classList.remove('contract-modal-open');
+        };
+
+        dialog.querySelectorAll<HTMLButtonElement>('[data-close-contract-modal]').forEach((btn) => {
+            btn.addEventListener('click', close);
+        });
+
+        dialog.addEventListener('click', (event) => {
+            const rect = dialog.getBoundingClientRect();
+            const clickedInside =
+                event.clientX >= rect.left &&
+                event.clientX <= rect.right &&
+                event.clientY >= rect.top &&
+                event.clientY <= rect.bottom;
+            if (!clickedInside) close();
+        });
+
+        dialog.addEventListener('close', () => {
+            document.body.classList.remove('contract-modal-open');
+        });
+    }
+</script>

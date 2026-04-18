@@ -1,4 +1,8 @@
 ---
+import { Image } from 'astro:assets';
+import neoflwLogo from '../assets/neoflw.png';
+import NavConnect from './web3/NavConnect.tsx';
+
 interface Props {
     locale?: 'en' | 'pt-BR';
 }
@@ -11,18 +15,46 @@ const homePath = pt ? '/pt-br/' : '/';
 <nav>
     <div class="nav-pill">
         <div class="nav-inner">
-            <a href={homePath} class="nav-logo"><span class="neo">NEØ</span> FlowOFF</a>
+            <a href={homePath} class="nav-logo" aria-label="NEØ FlowOFF — Home">
+                <Image src={neoflwLogo} alt="" width={28} height={28} loading="eager" class="nav-logo-img" />
+                <span class="nav-logo-text"><span class="neo">NEØ</span> FlowOFF</span>
+            </a>
+
+            <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-hidden="true" tabindex="-1" />
+            <label for="nav-toggle" class="nav-toggle" aria-label={pt ? 'Abrir menu' : 'Open menu'}>
+                <span class="nav-toggle-bar" aria-hidden="true"></span>
+                <span class="nav-toggle-bar" aria-hidden="true"></span>
+                <span class="nav-toggle-bar" aria-hidden="true"></span>
+                <span class="sr-only">{pt ? 'Menu' : 'Menu'}</span>
+            </label>
+
             <ul class="nav-links">
-                <li><a href="#tokenomics">{pt ? 'Tokenomics' : 'Tokenomics'}</a></li>
-                <li><a href="#features">{pt ? 'Recursos' : 'Features'}</a></li>
-                <li><a href="#chart">{pt ? 'Gráfico' : 'Chart'}</a></li>
-                <li><a href="#verify">{pt ? 'Verificação' : 'Verify'}</a></li>
+                <li><a href={`${homePath}#tokenomics`}>{pt ? 'Tokenomics' : 'Tokenomics'}</a></li>
+                <li><a href={`${homePath}#features`}>{pt ? 'Recursos' : 'Features'}</a></li>
+                <li><a href={`${homePath}#chart`}>{pt ? 'Gráfico' : 'Chart'}</a></li>
+                <li><a href={`${homePath}#verify`}>{pt ? 'Verificação' : 'Verify'}</a></li>
                 <li><a href={mintPath} class="nav-special">Mint</a></li>
                 <li><a href={switchPath} class="nav-special">{pt ? 'EN' : 'PT'}</a></li>
             </ul>
-            <button id="connect-btn" class="nav-wallet-btn">
-                <span class="dot"></span> {pt ? 'Conectar Wallet' : 'Connect Wallet'}
-            </button>
+
+            <NavConnect client:only="react" />
         </div>
     </div>
 </nav>
+
+<script is:inline>
+    (() => {
+        const toggle = document.getElementById('nav-toggle');
+        if (!toggle) return;
+        document.querySelectorAll('.nav-links a').forEach((link) => {
+            link.addEventListener('click', () => {
+                toggle.checked = false;
+            });
+        });
+        document.addEventListener('click', (e) => {
+            if (!toggle.checked) return;
+            const inner = document.querySelector('.nav-inner');
+            if (inner && !inner.contains(e.target)) toggle.checked = false;
+        });
+    })();
+</script>

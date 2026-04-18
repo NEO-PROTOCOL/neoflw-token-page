@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "skills": {
+    "adding-builder-codes": {
+      "source": "base/skills",
+      "sourceType": "github",
+      "computedHash": "0bcaa8f82216828720f4f4b2ba3d4895aceabbfa65837b87a1c269ffe554fb75"
+    },
+    "astro": {
+      "source": "astrolicious/agent-skills",
+      "sourceType": "github",
+      "computedHash": "ebefe26b231d32379c14e41a46c2de7b4b0184543bedab7febdabe4fb21fba4e"
+    },
+    "building-with-base-account": {
+      "source": "base/skills",
+      "sourceType": "github",
+      "computedHash": "dfd6a333c4d5b7a366a8398b562c35ee556c73101bc7863109f0c4a97de611ed"
+    },
+    "deploying-contracts-on-base": {
+      "source": "base/skills",
+      "sourceType": "github",
+      "computedHash": "86b3bda0b762374bc1e59c6949942039891c440656a83c9601b1ea02c42d7f92"
+    },
+    "migrating-an-onchainkit-app": {
+      "source": "base/skills",
+      "sourceType": "github",
+      "computedHash": "08ee1f14dfe72aa62f0f1e1219ebea04cf6126f64324472937067db5cb5dcb65"
+    },
+    "registering-agent-base-dev": {
+      "source": "base/skills",
+      "sourceType": "github",
+      "computedHash": "c0d31e44ed3d32d6d3711c11f69b07dc07ecf5b3e3a2d841f092b0670a0c8b23"
+    },
+    "setup-solidity-contracts": {
+      "source": "openzeppelin/openzeppelin-skills",
+      "sourceType": "github",
+      "computedHash": "9c0e45a4afb334c5460811d1c2db5ba7d7756f9e401b250921322c6aab86be64"
+    },
+    "skill-creator": {
+      "source": "base/skills",
+      "sourceType": "github",
+      "computedHash": "bb3a8a0b52c84eff06a0f62b8a844d522e952be1d3a1ad438972b64b0758ed4e"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "ca7b0c0c6e5f2750043f7f0cd72d16ac4e2abc48f9b5500d047a4b77a2506212"
+    }
+  }
+}

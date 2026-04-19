@@ -31,12 +31,19 @@ function shortAddr(addr: string) {
  * UI da extensão (popup do MetaMask permite ver outras contas/redes). Não
  * precisamos duplicar wallet picker no app — isso só adiciona um clique e
  * paralisia de decisão no funil de mint.
+ *
+ * Pure: depende somente dos parâmetros (sem leitura de `window`). A detecção
+ * de injected-flavor é feita pelo caller e passada como `hasInjectedProvider`,
+ * o que mantém esta função trivialmente testável sem mock de DOM.
  */
-function pickConnector(connectors: readonly Connector[]): Connector | null {
-  const eip6963 = connectors.filter((c) => classifyConnector(c) === 'eip6963');
-  if (eip6963.length > 0) return eip6963[0];
+function pickConnector(
+  connectors: readonly Connector[],
+  hasInjectedProvider: boolean,
+): Connector | null {
+  const eip6963 = connectors.find((c) => classifyConnector(c) === 'eip6963');
+  if (eip6963) return eip6963;
 
-  if (detectInjectedFlavor()) {
+  if (hasInjectedProvider) {
     const injected = connectors.find((c) => classifyConnector(c) === 'injected-generic');
     if (injected) return injected;
   }
@@ -74,7 +81,7 @@ function NavConnectInner() {
   }
 
   function handleConnect() {
-    const picked = pickConnector(connectors);
+    const picked = pickConnector(connectors, detectInjectedFlavor() !== null);
     if (picked) {
       connect({ connector: picked });
       return;

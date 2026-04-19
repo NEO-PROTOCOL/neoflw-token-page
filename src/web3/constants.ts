@@ -18,10 +18,32 @@ function env(key: string, fallback: string): string {
   return (raw ?? '').trim() || fallback;
 }
 
+/**
+ * Valida e normaliza referência de pool em um DEX agregador.
+ *
+ * Aceita dois formatos porque GeckoTerminal/DexScreener consomem ambos:
+ * - Address EVM (0x + 40 hex) — Uniswap V2/V3, Aerodrome, etc.
+ * - Pool ID (0x + 64 hex)     — Uniswap V4 (PoolManager singleton).
+ *
+ * Falhar cedo aqui evita silent breakage em fetch de price/volume.
+ */
+function envPoolRef(key: string, fallback: string): string {
+  const value = env(key, fallback).toLowerCase();
+  if (/^0x[a-f0-9]{40}$/.test(value) || /^0x[a-f0-9]{64}$/.test(value)) {
+    return value;
+  }
+  throw new Error(
+    `Invalid ${key}: expected 0x-prefixed 20-byte address or 32-byte pool ID, got "${value}".`,
+  );
+}
+
 // ─── On-chain refs ──────────────────────────────────────────────
 
-/** Aerodrome/V3 pool address (Base) — fonte de price/volume. */
-export const NEOFLW_POOL = env(
+/**
+ * Pool reference no DEX agregador (Uniswap V4 PoolManager singleton no
+ * caso atual — daí o formato 32 bytes em vez de address EVM).
+ */
+export const NEOFLW_POOL_ID = envPoolRef(
   'PUBLIC_POOL_ADDRESS',
   '0xba6f7f1d429c61e1714bd94a1c74414289fe52f1c14473ba005edfd042d3f014',
 );
@@ -34,8 +56,12 @@ export const MAX_SUPPLY_TOKENS = 1_000_000_000;
 
 // ─── Public URLs (canonical) ────────────────────────────────────
 
-/** Origin canônica (sem barra final). Usado em OG/canonical/deep links. */
-export const SITE_URL = env('PUBLIC_SITE_URL', 'https://neoflw.vercel.app');
+/**
+ * Origin canônica (sem barra final). Usado em OG/canonical/deep links.
+ * Trailing slashes são removidas para evitar `//og-image.png` quando
+ * concatenando paths a esta URL.
+ */
+export const SITE_URL = env('PUBLIC_SITE_URL', 'https://neoflw.vercel.app').replace(/\/+$/, '');
 
 export const OG_IMAGE_URL = `${SITE_URL}/og-image.png`;
 
@@ -51,7 +77,7 @@ export const UNISWAP_BUY_URL =
   `https://app.uniswap.org/swap?chain=base&inputCurrency=USDC&outputCurrency=${ADDR_LC}`;
 
 export const GECKOTERMINAL_POOL_URL =
-  `https://www.geckoterminal.com/base/pools/${NEOFLW_POOL}`;
+  `https://www.geckoterminal.com/base/pools/${NEOFLW_POOL_ID}`;
 
 /** Embed parametrizado usado no ChartSection. */
 export const GECKOTERMINAL_POOL_EMBED_URL =
@@ -59,14 +85,33 @@ export const GECKOTERMINAL_POOL_EMBED_URL =
 
 // ─── Read-only data APIs ────────────────────────────────────────
 
+/**
+ * Origin da API do explorer derivado de `BASESCAN_URL`. Se alguém
+ * setar `PUBLIC_BASESCAN_URL` para um mirror/testnet (ex.
+ * `https://sepolia.basescan.org`), a API URL acompanha automaticamente
+ * (vira `https://api-sepolia.basescan.org`). Sem essa derivação,
+ * havia drift garantido entre explorer e API.
+ */
+const BASESCAN_API_ORIGIN = (() => {
+  try {
+    const url = new URL(BASESCAN_URL);
+    url.hostname = url.hostname.startsWith('api.')
+      ? url.hostname
+      : `api.${url.hostname}`;
+    return url.origin;
+  } catch {
+    return 'https://api.basescan.org';
+  }
+})();
+
 export const GECKOTERMINAL_POOL_API_URL =
-  `https://api.geckoterminal.com/api/v2/networks/base/pools/${NEOFLW_POOL}`;
+  `https://api.geckoterminal.com/api/v2/networks/base/pools/${NEOFLW_POOL_ID}`;
 
 export const DEXSCREENER_PAIR_API_URL =
-  `https://api.dexscreener.com/latest/dex/pairs/base/${NEOFLW_POOL}`;
+  `https://api.dexscreener.com/latest/dex/pairs/base/${NEOFLW_POOL_ID}`;
 
 export const BASESCAN_TOKENSUPPLY_API_URL =
-  `https://api.basescan.org/api?module=stats&action=tokensupply&contractaddress=${NEOFLW_ADDRESS}`;
+  `${BASESCAN_API_ORIGIN}/api?module=stats&action=tokensupply&contractaddress=${NEOFLW_ADDRESS}`;
 
 // ─── Cross-repo source-of-truth (issue #1 metadata) ─────────────
 

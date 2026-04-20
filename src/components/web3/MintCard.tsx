@@ -58,7 +58,7 @@ function MintInner({ pt }: Props) {
     query: { enabled: Boolean(address) },
   });
 
-  const data = info.data;
+  const data = info;
   const priceWei = data?.[2] ?? 0n;
   const supplyWei = data?.[0] ?? 0n;
   const amountWei = data?.[3] ?? 0n;

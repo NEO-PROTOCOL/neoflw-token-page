@@ -1,32 +1,50 @@
 ---
 import { Image } from 'astro:assets';
-import { BASESCAN_TOKEN_URL } from '../web3/constants';
+import { BASESCAN_TOKEN_URL, KNOWN_CIRCULATING_TOKENS, MAX_SUPPLY_TOKENS } from '../web3/constants';
 
 interface Props {
     locale?: 'en' | 'pt-BR';
 }
-const { locale = 'en' } = Astro.props;
+const { locale = 'pt-BR' } = Astro.props;
 const pt = locale === 'pt-BR';
-const basePartnerLabel = pt ? 'Parceiro de Infraestrutura' : 'Infrastructure Partner';
-const basePartnerTitle = pt ? 'Suportado pela Base' : 'Powered by Base';
-const basePartnerBody = pt
-    ? 'Liquidação em Base Mainnet com infraestrutura L2 robusta para escalar com segurança.'
-    : 'Settlement on Base Mainnet with robust L2 infrastructure built for secure scaling.';
+const numberLocale = pt ? 'pt-BR' : 'en-US';
+const supplyPctWidth = MAX_SUPPLY_TOKENS > 0 ? (KNOWN_CIRCULATING_TOKENS / MAX_SUPPLY_TOKENS) * 100 : 0;
+const supplyCountInitial = KNOWN_CIRCULATING_TOKENS.toLocaleString(numberLocale);
 ---
 <section class="bento-section" id="tokenomics">
     <div class="wrap">
-        <div class="section-eyebrow">{pt ? '01 - Tokenomics e Recursos' : '01 - Tokenomics & Features'}</div>
-        <div class="section-title" id="features">{pt ? 'Token de classe mundial' : 'Best-in-class token'}</div>
+        <div class="section-eyebrow">{pt ? '01 — Mint e tokenomics' : '01 — Mint & tokenomics'}</div>
+        <div class="section-title" id="features">
+            {pt ? (
+                <>
+                    <span>Mint em tempo real na Base</span><br />
+                    <span style="font-weight:500;color:var(--text-2);font-size:0.9em;">
+                        Contrato verificado · Assegure seu $NEOFLW agora
+                    </span>
+                </>
+            ) : (
+                <>
+                    <span>Official $NEOFLW mint on Base</span><br />
+                    <span style="font-weight:500;color:var(--text-2);font-size:0.9em;">
+                        Verified contract · Secure your $NEOFLW now
+                    </span>
+                </>
+            )}
+        </div>
 
         <div class="bento">
 
-            <div class="bc bc-supply bc-w8 interactive-mint">
+            <div class="bc bc-supply bc-w8 interactive-mint" id="mint">
                 <div class="bc-label">{pt ? 'Distribuição On-Chain' : 'On-chain Distribution'}</div>
-                <div class="bc-number-huge" id="supply-count">—</div>
-                <div class="bc-sublabel">{pt ? '$NEOFLW cunhados de um máximo de 1.000.000.000. Um mint por wallet.' : '$NEOFLW minted of 1,000,000,000 max supply. One mint per wallet.'}</div>
+                <div class="bc-number-huge" id="supply-count">{supplyCountInitial}</div>
+                <div class="bc-sublabel">
+                    {pt
+                        ? `Hoje já foram mintados ${supplyCountInitial} $NEOFLW de um total máximo de 1.000.000.000. Apenas 1 mint por wallet.`
+                        : `${supplyCountInitial} $NEOFLW already minted out of a 1,000,000,000 max supply. One mint per wallet.`}
+                </div>
 
                 <div class="supply-progress">
-                    <div class="supply-bar" id="supply-bar" style="width: 100%;"></div>
+                    <div class="supply-bar" id="supply-bar" style={`width:${Math.min(100, supplyPctWidth)}%`}></div>
                 </div>
 
                 <div class="mint-card">
@@ -45,30 +63,6 @@ const basePartnerBody = pt
                             {pt ? 'Mint Agora' : 'Mint Now'}
                         </button>
                     </div>
-                </div>
-
-                <div class="base-powered" aria-label={basePartnerTitle}>
-                    <div class="base-powered-copy">
-                        <span class="base-powered-kicker">{basePartnerLabel}</span>
-                        <span class="base-powered-title">{basePartnerTitle}</span>
-                        <span class="base-powered-body">{basePartnerBody}</span>
-                    </div>
-                    <a
-                        class="base-powered-logo-link"
-                        href="https://base.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={pt ? 'Abrir site da Base' : 'Open Base website'}
-                    >
-                        <Image
-                            class="base-powered-logo"
-                            src="/Base_lockup_white.webp"
-                            alt="Base"
-                            width="300"
-                            height="77"
-                            loading="lazy"
-                        />
-                    </a>
                 </div>
             </div>
 

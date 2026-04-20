@@ -6,11 +6,11 @@ import NavConnect from './web3/NavConnect.tsx';
 interface Props {
     locale?: 'en' | 'pt-BR';
 }
-const { locale = 'en' } = Astro.props;
+const { locale = 'pt-BR' } = Astro.props;
 const pt = locale === 'pt-BR';
-const mintPath = pt ? '/pt-br/mint' : '/mint';
-const switchPath = pt ? '/' : '/pt-br/';
-const homePath = pt ? '/pt-br/' : '/';
+const mintPath = pt ? '/mint' : '/en/mint';
+const switchPath = pt ? '/en/' : '/';
+const homePath = pt ? '/' : '/en/';
 ---
 <nav>
     <div class="nav-pill">

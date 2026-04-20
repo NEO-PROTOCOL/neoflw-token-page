@@ -332,8 +332,10 @@ const canonicalUrl = `${SITE_URL}${canonicalPath}`;
         inset: 0;
         background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         animation: shimmer 2.5s ease infinite;
+        animation-play-state: paused;
         background-size: 1000px 100%;
         opacity: 0;
+        pointer-events: none;
     }
 
     .nav-btn:hover {
@@ -344,6 +346,7 @@ const canonicalUrl = `${SITE_URL}${canonicalPath}`;
 
     .nav-btn:hover::before {
         opacity: 1;
+        animation-play-state: running;
     }
 
     .nav-btn:active {
@@ -566,13 +569,21 @@ const canonicalUrl = `${SITE_URL}${canonicalPath}`;
         inset: 0;
         background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         animation: shimmer 3s infinite;
+        animation-play-state: paused;
         background-size: 1000px 100%;
+        opacity: 0;
+        pointer-events: none;
     }
 
     .btn-fill:hover {
         opacity: 0.95;
         transform: translateY(-3px) scale(1.02);
         box-shadow: 0 12px 32px rgba(0, 255, 136, 0.45), 0 0 20px rgba(0, 255, 136, 0.2);
+    }
+
+    .btn-fill:hover::before {
+        opacity: 1;
+        animation-play-state: running;
     }
 
     .btn-fill:active {
@@ -855,6 +866,7 @@ const canonicalUrl = `${SITE_URL}${canonicalPath}`;
         background: var(--green-dim);
         border: 1px solid rgba(0, 255, 136, 0.35);
         color: var(--green);
+        --glow-rgb: 0, 255, 136;
         font-size: 0.65rem;
         font-weight: 600;
         font-family: var(--mono);
@@ -1464,6 +1476,7 @@ const canonicalUrl = `${SITE_URL}${canonicalPath}`;
         color: var(--green);
         box-shadow: 0 0 12px rgba(0, 255, 136, 0.2);
         animation: glowPulse 2s ease infinite;
+        --glow-rgb: 0, 255, 136;
     }
 
     .proof-live-chip.is-on:hover {
@@ -1939,6 +1952,7 @@ const canonicalUrl = `${SITE_URL}${canonicalPath}`;
         border-radius: 50%;
         animation: glowPulse 1.5s ease infinite;
         box-shadow: 0 0 8px var(--green);
+        --glow-rgb: 0, 255, 136;
     }
 
     .chart-expand-btn {
@@ -2181,6 +2195,7 @@ const canonicalUrl = `${SITE_URL}${canonicalPath}`;
     .verify-heading .ok {
         color: var(--green);
         animation: glowPulse 2.5s ease infinite;
+        --glow-rgb: 0, 255, 136;
     }
 
     .verify-body {
@@ -2407,10 +2422,10 @@ const canonicalUrl = `${SITE_URL}${canonicalPath}`;
 
     @keyframes glowPulse {
         0%, 100% {
-            box-shadow: 0 0 10px rgba(255, 0, 204, 0.4), 0 0 30px rgba(255, 0, 204, 0.15);
+            box-shadow: 0 0 10px rgba(var(--glow-rgb, 255, 0, 204), 0.4), 0 0 30px rgba(var(--glow-rgb, 255, 0, 204), 0.15);
         }
         50% {
-            box-shadow: 0 0 20px rgba(255, 0, 204, 0.6), 0 0 40px rgba(255, 0, 204, 0.25);
+            box-shadow: 0 0 20px rgba(var(--glow-rgb, 255, 0, 204), 0.6), 0 0 40px rgba(var(--glow-rgb, 255, 0, 204), 0.25);
         }
     }
 
@@ -3034,6 +3049,16 @@ const canonicalUrl = `${SITE_URL}${canonicalPath}`;
 
         .proof-trust-grid {
             grid-template-columns: 1fr 1fr;
+        }
+    }
+    /* Accessibility: respect user's motion preference */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
         }
     }
   </style>

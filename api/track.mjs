@@ -45,7 +45,7 @@ function getCorsHeaders(origin) {
   const allowed = new Set(
     (
       process.env.TRACK_ALLOWED_ORIGINS ??
-      'https://neoflw.xyz,https://www.neoflw.xyz,https://neoflw.vercel.app'
+      'https://neoflw.xyz,https://www.neoflw.xyz'
     )
       .split(',')
       .map((item) => item.trim())

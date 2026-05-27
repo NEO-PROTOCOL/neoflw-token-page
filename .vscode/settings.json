@@ -4,5 +4,9 @@
   "files.associations": {
     "*.tsx": "typescriptreact",
     "*.jsx": "javascriptreact"
-  }
+  },
+  "AREPL.pythonOptions": [
+    
+    "-u"
+  ]
 }

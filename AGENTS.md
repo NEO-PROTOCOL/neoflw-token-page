@@ -341,6 +341,7 @@ Contract entrypoints relevantes (ver `src/web3/abi.ts`):
 - Nunca commitar `.agents/` ou `.claude/skills/`
 - Nunca usar emoji colorido em docs (ver MARKDOWN_STYLE_GUIDE)
 - Nunca editar contratos sem rodar skill `solidity-security`
+- **NUNCA usar pacotes obsoletos e pesados de wallet (`wagmi`, `@coinbase/onchainkit`, `@metamask/sdk`, etc.).** Se o frontend precisar de conexão web3 no futuro, use `viem` puro, bibliotecas de abstração ultra-leves, ou `x420`.
 - URLs legadas `/pt-br/*`: a árvore `src/pages/pt-br/` pode estar ausente após migração; **não remover** os redirects 301 em `vercel.json` que preservam essas rotas (`/pt-br` → `/`, `/pt-br/mint` → `/mint`, etc.). Indexação antiga deve continuar a resolver.
 
 ────────────────────────────────────────

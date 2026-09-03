@@ -14,20 +14,20 @@
   "dependencies": {
     "3d-force-graph": "^1.80.0",
     "@astrojs/react": "^5.0.7",
-    "@lucide/astro": "^1.24.0",
+    "@lucide/astro": "^1.39.0",
     "astro": "^5.18.2",
     "eventemitter3": "^5.0.4",
-    "ox": "^0.14.30",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "sharp": "^0.34.5",
+    "ox": "^0.14.44",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sharp": "^0.35.4",
     "three": "^0.184.0",
-    "viem": "^2.55.2"
+    "viem": "^2.56.3"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.8",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
+    "@astrojs/check": "^0.9.10",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
     "@types/three": "^0.184.0",
     "markdownlint-cli2": "^0.22.0",
     "typescript": "^5.9.3"
